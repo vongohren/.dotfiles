@@ -1,0 +1,29 @@
+"*":
+  core:
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+  editor:
+    tabLength: 4
+  "elm-format":
+    binary: "elm-format"
+  elmjutsu:
+    cacheDirectory: "/var/folders/wx/sxjm2ym97sd708nw3fqw41sxlq7p6h/T/elmjutsu26668a3BnbOME31Tt"
+  etheratom:
+    executionEnv: "web3"
+    rpcAddress: "http://localhost:9545/"
+  "exception-reporting":
+    userId: "de9443b9-1fd2-4885-ade4-8bd0e92a8171"
+  "go-plus":
+    panel:
+      currentHeight: "14.427860696517413vh"
+  "tree-view": {}
+  welcome:
+    showOnStartup: false
+".editorconfig.source":
+  editor:
+    tabLength: 2
+"tree-view":
+  hideVcsIgnoredFiles: false
