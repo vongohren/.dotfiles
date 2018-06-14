@@ -19,6 +19,9 @@
   "go-plus":
     panel:
       currentHeight: "14.427860696517413vh"
+  "package-sync":
+    createOnChange: true
+    forceOverwrite: true
   "tree-view": {}
   welcome:
     showOnStartup: false
