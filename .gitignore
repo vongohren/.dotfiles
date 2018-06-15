@@ -3,3 +3,6 @@
 /.atom/compile-cache/
 /.atom/packages/
 /.atom/storage/
+
+#Mac shit
+.DS_Store
