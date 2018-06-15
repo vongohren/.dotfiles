@@ -269,11 +269,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>874 141 680 335 0 0 1680 1027 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>269 389 796 473 0 0 1680 1027 </string>
+	<string>269 422 796 473 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>129 78 1002 819 0 0 1680 1027 </string>
+	<string>0 10 1090 1017 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>749 350 570 452 0 0 1680 1027 </string>
+	<string>10 10 1050 1017 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>233 78 570 452 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
@@ -471,7 +471,7 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>80</integer>
+			<integer>135</integer>
 			<key>Command</key>
 			<string></string>
 			<key>Cursor Color</key>
@@ -854,7 +854,7 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>25</integer>
+			<integer>55</integer>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
