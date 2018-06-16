@@ -1,4 +1,15 @@
 ################################################################################
+#Initializing zsh with plugins
+################################################################################
+plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions)
+#https://github.com/zsh-users/zsh-autosuggestions
+#https://github.com/zsh-users/zsh-syntax-highlighting
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel9k/powerlevel9k"
+source $ZSH/oh-my-zsh.sh
+
+################################################################################
 #Theme powerlevel9k variables and methods
 ################################################################################
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
@@ -12,15 +23,6 @@ if [[ $(print -P "%#") =~ "#" ]]; then
     user_symbol = "#"
 fi
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
-
-################################################################################
-#Initializing zsh
-################################################################################
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel9k/powerlevel9k"
-source $ZSH/oh-my-zsh.sh
-
-plugins=(git npm brew osx zsh-syntax-highlighting)
 
 ################################################################################
 #Setting up my bash history setup
@@ -48,12 +50,6 @@ alias f='open -a Finder ./'
 ################################################################################
 #Sourcing and env variables
 ################################################################################
-# NVM initializing
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+source ~/.dotfiles/scripts/nvm.sh
