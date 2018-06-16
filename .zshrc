@@ -1,13 +1,13 @@
 ################################################################################
 #Initializing zsh with plugins
 ################################################################################
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions)
 #https://github.com/zsh-users/zsh-autosuggestions
 #https://github.com/zsh-users/zsh-syntax-highlighting
-
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel9k/powerlevel9k"
 source $ZSH/oh-my-zsh.sh
+
 
 ################################################################################
 #Theme powerlevel9k variables and methods
