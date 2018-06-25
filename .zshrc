@@ -53,3 +53,18 @@ alias f='open -a Finder ./'
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
 source ~/.dotfiles/scripts/nvm.sh
+
+#Set java version. Depends on what you have installed. /usr/libexec/java_home -V
+#https://stackoverflow.com/questions/21964709/how-to-set-or-change-the-default-java-jdk-version-on-os-x
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export ANDROID_HOME='/Users/snorre/code/android'
+export PATH=${PATH}:${ANDROID_HOME}
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/tools/bin
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/snorre/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/snorre/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/snorre/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/snorre/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

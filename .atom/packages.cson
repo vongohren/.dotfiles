@@ -1,3 +1,5 @@
 packages: [
+  "editorconfig"
+  "language-javascript-jsx"
   "package-sync"
 ]
