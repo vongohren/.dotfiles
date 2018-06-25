@@ -46,6 +46,7 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 alias reload='. ~/.zshrc' #Reload the source
 port () {lsof -i :"$1";}
 alias f='open -a Finder ./'
+alias size='du -sh'
 
 ################################################################################
 #Sourcing and env variables
