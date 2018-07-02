@@ -12,7 +12,7 @@ source $ZSH/oh-my-zsh.sh
 ################################################################################
 #Theme powerlevel9k variables and methods
 ################################################################################
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir rbenv vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs history time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 # Add a space in the first prompt
@@ -72,3 +72,10 @@ if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/code/go
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/code/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/completion.zsh.inc"; fi
+
+# Rbenv - https://github.com/rbenv/rbenv
+eval "$(rbenv init -)"
+
+# Fastlane
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
