@@ -1,6 +1,12 @@
 packages: [
+  "autocomplete-solidity"
   "editorconfig"
+  "etheratom"
+  "language-ethereum"
   "language-javascript-jsx"
+  "language-solidity"
+  "linter-solidity"
+  "multi-cursor"
   "package-sync"
   "pretty-json"
 ]

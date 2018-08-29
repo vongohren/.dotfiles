@@ -49,6 +49,14 @@ alias f='open -a Finder ./'
 alias size='du -sh'
 
 ################################################################################
+#Functions to handle my environment
+################################################################################
+
+setjdk() {
+  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
+}
+
+################################################################################
 #Sourcing and env variables
 ################################################################################
 #z command https://github.com/rupa/z installed by brew
