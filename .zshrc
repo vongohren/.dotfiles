@@ -84,6 +84,9 @@ if [ -f "$HOME/code/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/c
 # Rbenv - https://github.com/rbenv/rbenv
 eval "$(rbenv init -)"
 
+# Pyenv - https://github.com/pyenv/pyenv
+eval "$(pyenv init -)"
+
 # Fastlane
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
