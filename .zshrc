@@ -47,6 +47,7 @@ alias reload='. ~/.zshrc' #Reload the source
 port () {lsof -i :"$1";}
 alias f='open -a Finder ./'
 alias size='du -sh'
+alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 
 ################################################################################
 #Functions to handle my environment
