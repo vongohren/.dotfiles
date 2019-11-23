@@ -48,6 +48,16 @@ port () {lsof -i :"$1";}
 alias f='open -a Finder ./'
 alias size='du -sh'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
+getEditorConfig () {
+  cp ~/.dotfiles/personal/.editorconfig $1
+  
+}
+kickstart () {
+  mkdir $1 && cd $1 && git init && yarn init --yes && code .
+  touch .gitignore
+  getEditorConfig $(pwd)
+  echo "You're fricking awesome 🤘 ✌️ 🤙"
+}
 
 ################################################################################
 #Functions to handle my environment
