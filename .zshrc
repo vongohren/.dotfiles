@@ -8,6 +8,14 @@ plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions)
 #https://github.com/zsh-users/zsh-syntax-highlighting
 source $ZSH/oh-my-zsh.sh
 
+################################################################################
+# Initializing All things I need to install via brew
+################################################################################
+
+setuposbrew () {
+  brew install diff-so-fancy
+  brew install deno
+}
 
 ################################################################################
 #Theme powerlevel9k variables and methods
