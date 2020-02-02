@@ -9,6 +9,14 @@ plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 ################################################################################
+# Initializing All the things
+################################################################################
+startsetup () {
+  setupcoding()
+  setuposbrew()
+}
+
+################################################################################
 # Initializing All things I need to install via brew
 ################################################################################
 
@@ -16,6 +24,20 @@ setuposbrew () {
   brew install diff-so-fancy
   brew install deno
 }
+
+################################################################################
+# Setup ready for coding
+################################################################################
+
+setupcoding () {
+  mkdir "$HOME/code"
+  mkdir "$HOME/code/executables"
+  cd "$HOME/code/executables"
+  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
+  cd "$HOME"
+
+}
+
 
 ################################################################################
 #Theme powerlevel9k variables and methods
@@ -93,6 +115,9 @@ export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 export FASTLANE="$HOME/.fastlane"
 export PATH=${PATH}:${FASTLANE}/bin
+
+export EXECUTABLES="$HOME/code/executables"
+export PATH=${PATH}:${EXECUTABLES}
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/path.zsh.inc"; fi
