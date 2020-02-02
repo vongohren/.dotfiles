@@ -12,8 +12,8 @@ source $ZSH/oh-my-zsh.sh
 # Initializing All the things
 ################################################################################
 startsetup () {
-  setupcoding()
-  setuposbrew()
+  setupcoding
+  setuposbrew
 }
 
 ################################################################################
@@ -35,7 +35,6 @@ setupcoding () {
   cd "$HOME/code/executables"
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
-
 }
 
 
