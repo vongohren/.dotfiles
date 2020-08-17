@@ -23,6 +23,8 @@ startsetup () {
 setuposbrew () {
   brew install diff-so-fancy
   brew install deno
+  brew install rbenv
+  brew install terraform
 }
 
 ################################################################################
@@ -79,7 +81,6 @@ alias size='du -sh'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 getEditorConfig () {
   cp ~/.dotfiles/personal/.editorconfig $1
-  
 }
 kickstart () {
   mkdir $1 && cd $1 && git init && yarn init --yes && code .
@@ -118,6 +119,11 @@ export PATH=${PATH}:${FASTLANE}/bin
 export EXECUTABLES="$HOME/code/executables"
 export PATH=${PATH}:${EXECUTABLES}
 
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/path.zsh.inc"; fi
 
@@ -135,3 +141,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
