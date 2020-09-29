@@ -3,7 +3,7 @@
 ################################################################################
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel9k/powerlevel9k"
-plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions git-open)
 #https://github.com/zsh-users/zsh-autosuggestions
 #https://github.com/zsh-users/zsh-syntax-highlighting
 source $ZSH/oh-my-zsh.sh
@@ -123,6 +123,8 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
+
+export CLOUDSDK_PYTHON=/Users/snorre/.pyenv/shims/python
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/path.zsh.inc"; fi
