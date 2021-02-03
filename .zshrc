@@ -13,18 +13,27 @@ source $ZSH/oh-my-zsh.sh
 ################################################################################
 startsetup () {
   setupcoding
-  setuposbrew
+  setuposwithbrew
+  setupruby
 }
 
 ################################################################################
 # Initializing All things I need to install via brew
 ################################################################################
 
-setuposbrew () {
+setuposwithbrew () {
+  brew update
   brew install diff-so-fancy
   brew install deno
   brew install rbenv
   brew install terraform
+  brew install kubectl
+  brew install pyenv
+  brew install --cask iterm2
+  brew install --cask google-chrome
+  brew install --cask visual-studio-code
+  brew install --cask slack
+  brew install postgresql
 }
 
 ################################################################################
@@ -38,6 +47,18 @@ setupcoding () {
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
 }
+
+echo "Installing Ruby gems"
+RUBY_GEMS=(
+    bundler
+    filewatcher
+    cocoapods
+)
+
+setupruby () {
+ sudo gem install ${RUBY_GEMS[@]}
+}
+
 
 
 ################################################################################
