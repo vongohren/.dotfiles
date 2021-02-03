@@ -22,7 +22,32 @@ startsetup () {
 ################################################################################
 
 setuposwithbrew () {
+
+  # Check for Homebrew, install if we don't have it
+  if test ! $(which brew); then
+      echo "Installing homebrew..."
+      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+
   brew update
+
+  echo "Installing brew updates and defaults"
+  brew tap homebrew/dupes
+  brew install coreutils
+  brew install gnu-sed --with-default-names
+  brew install gnu-tar --with-default-names
+  brew install gnu-indent --with-default-names
+  brew install gnu-which --with-default-names
+  brew install gnu-grep --with-default-names
+
+  # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+  brew install findutils
+
+  # Install Bash 4
+  brew install bash
+
+  echo "Installing packages I want"
+  brew install rust
   brew install diff-so-fancy
   brew install deno
   brew install rbenv
@@ -41,6 +66,7 @@ setuposwithbrew () {
 ################################################################################
 
 setupcoding () {
+  echo "Setup some code related vars and simple executables"
   mkdir "$HOME/code"
   mkdir "$HOME/code/executables"
   cd "$HOME/code/executables"
@@ -48,7 +74,6 @@ setupcoding () {
   cd "$HOME"
 }
 
-echo "Installing Ruby gems"
 RUBY_GEMS=(
     bundler
     filewatcher
@@ -56,7 +81,8 @@ RUBY_GEMS=(
 )
 
 setupruby () {
- sudo gem install ${RUBY_GEMS[@]}
+  echo "Installing Ruby gems"
+  sudo gem install ${RUBY_GEMS[@]}
 }
 
 
