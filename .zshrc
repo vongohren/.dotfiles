@@ -1,90 +1,33 @@
+
+
+
+
+################################################################################
+# 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
+# To start the ball, please call init script!!
+# 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
+################################################################################
+
+
+
 ################################################################################
 #Initializing zsh with plugins
 ################################################################################
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="random"
 plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions git-open)
 #https://github.com/zsh-users/zsh-autosuggestions
 #https://github.com/zsh-users/zsh-syntax-highlighting
 source $ZSH/oh-my-zsh.sh
 
 ################################################################################
-# Initializing All the things
+# Keybindings for Mac usage
 ################################################################################
-startsetup () {
-  setupcoding
-  setuposwithbrew
-  setupruby
-}
-
-################################################################################
-# Initializing All things I need to install via brew
-################################################################################
-
-setuposwithbrew () {
-
-  # Check for Homebrew, install if we don't have it
-  if test ! $(which brew); then
-      echo "Installing homebrew..."
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  fi
-
-  brew update
-
-  echo "Installing brew updates and defaults"
-  brew tap homebrew/dupes
-  brew install coreutils
-  brew install gnu-sed --with-default-names
-  brew install gnu-tar --with-default-names
-  brew install gnu-indent --with-default-names
-  brew install gnu-which --with-default-names
-  brew install gnu-grep --with-default-names
-
-  # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-  brew install findutils
-
-  # Install Bash 4
-  brew install bash
-
-  echo "Installing packages I want"
-  brew install rust
-  brew install diff-so-fancy
-  brew install deno
-  brew install rbenv
-  brew install terraform
-  brew install kubectl
-  brew install pyenv
-  brew install --cask iterm2
-  brew install --cask google-chrome
-  brew install --cask visual-studio-code
-  brew install --cask slack
-  brew install postgresql
-}
-
-################################################################################
-# Setup ready for coding
-################################################################################
-
-setupcoding () {
-  echo "Setup some code related vars and simple executables"
-  mkdir "$HOME/code"
-  mkdir "$HOME/code/executables"
-  cd "$HOME/code/executables"
-  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
-  cd "$HOME"
-}
-
-RUBY_GEMS=(
-    bundler
-    filewatcher
-    cocoapods
-)
-
-setupruby () {
-  echo "Installing Ruby gems"
-  sudo gem install ${RUBY_GEMS[@]}
-}
-
+# https://stackoverflow.com/a/16411270
+bindkey -e
+# Giving me alt left and right options to move the cursor
+bindkey '\e\e[C' forward-word
+bindkey '\e\e[D' backward-word
 
 
 ################################################################################
@@ -119,22 +62,12 @@ setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 
 ################################################################################
-#Aliases
+#Sourcing and env variables
 ################################################################################
-alias reload='. ~/.zshrc' #Reload the source
-port () {lsof -i :"$1";}
-alias f='open -a Finder ./'
-alias size='du -sh'
-alias bundletools='java -jar ~/code/scripts/bundletool.jar'
-getEditorConfig () {
-  cp ~/.dotfiles/personal/.editorconfig $1
-}
-kickstart () {
-  mkdir $1 && cd $1 && git init && yarn init --yes && code .
-  touch .gitignore
-  getEditorConfig $(pwd)
-  echo "You're fricking awesome 🤘 ✌️ 🤙"
-}
+#z command https://github.com/rupa/z installed by brew
+. `brew --prefix`/etc/profile.d/z.sh
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
 
 ################################################################################
 #Functions to handle my environment
@@ -144,16 +77,9 @@ setjdk() {
   export JAVA_HOME=$(/usr/libexec/java_home -v $1)
 }
 
-################################################################################
-#Sourcing and env variables
-################################################################################
-#z command https://github.com/rupa/z installed by brew
-. `brew --prefix`/etc/profile.d/z.sh
-source ~/.dotfiles/scripts/nvm.sh
-
 #Set java version. Depends on what you have installed. /usr/libexec/java_home -V
 #https://stackoverflow.com/questions/21964709/how-to-set-or-change-the-default-java-jdk-version-on-os-x
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JAVA_HOME=`/usr/libexec/java_home`
 export ANDROID_HOME="$HOME/code/android"
 export PATH=${PATH}:${ANDROID_HOME}
 export PATH=${PATH}:${ANDROID_HOME}/tools
@@ -193,3 +119,92 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+################################################################################
+# Initializing All the things
+################################################################################
+startsetup () {
+  setupcoding
+  setuposwithbrew
+  setupruby
+}
+
+################################################################################
+# Initializing All things I need to install via brew
+################################################################################
+
+setuposwithbrew () {
+  brew update
+
+  echo "Installing brew updates and defaults"
+  brew tap homebrew/dupes
+  brew install coreutils
+  brew install gnu-sed --with-default-names
+  brew install gnu-tar --with-default-names
+  brew install gnu-indent --with-default-names
+  brew install gnu-which --with-default-names
+  brew install gnu-grep --with-default-names
+
+  # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+  brew install findutils
+
+  # Install Bash 4
+  brew install bash
+
+  echo "Installing packages I want"
+  brew install rust
+  brew install diff-so-fancy
+  brew install deno
+  brew install rbenv
+  brew install terraform
+  brew install kubectl
+  brew install pyenv
+  brew install cocoapods
+  brew install --cask adoptopenjdk
+  brew install --cask iterm2
+  brew install --cask google-chrome
+  brew install --cask visual-studio-code
+  brew install --cask slack
+  brew install postgresql
+}
+
+################################################################################
+# Setup ready for coding
+################################################################################
+
+setupcoding () {
+  echo "Setup some code related vars and simple executables"
+  mkdir "$HOME/code"
+  mkdir "$HOME/code/executables"
+  cd "$HOME/code/executables"
+  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
+  cd "$HOME"
+}
+
+RUBY_GEMS=(
+    bundler
+    filewatcher
+)
+
+setupruby () {
+  echo "Installing Ruby gems"
+  sudo gem install ${RUBY_GEMS[@]}
+}
+
+################################################################################
+#Aliases
+################################################################################
+alias reload='. ~/.zshrc' #Reload the source
+port () {lsof -i :"$1";}
+alias f='open -a Finder ./'
+alias size='du -sh'
+alias bundletools='java -jar ~/code/scripts/bundletool.jar'
+getEditorConfig () {
+  cp ~/.dotfiles/personal/.editorconfig $1
+}
+kickstart () {
+  mkdir $1 && cd $1 && git init && yarn init --yes && code .
+  touch .gitignore
+  getEditorConfig $(pwd)
+  echo "You're fricking awesome 🤘 ✌️ 🤙"
+}
