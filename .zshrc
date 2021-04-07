@@ -139,11 +139,6 @@ setuposwithbrew () {
   echo "Installing brew updates and defaults"
   brew tap homebrew/dupes
   brew install coreutils
-  brew install gnu-sed --with-default-names
-  brew install gnu-tar --with-default-names
-  brew install gnu-indent --with-default-names
-  brew install gnu-which --with-default-names
-  brew install gnu-grep --with-default-names
 
   # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
   brew install findutils
@@ -160,8 +155,8 @@ setuposwithbrew () {
   brew install kubectl
   brew install pyenv
   brew install cocoapods
+  brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
-  brew install --cask iterm2
   brew install --cask google-chrome
   brew install --cask visual-studio-code
   brew install --cask slack

@@ -10,7 +10,8 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/p
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 git clone https://github.com/paulirish/git-open.git ~/.oh-my-zsh/custom/plugins/git-open
 
-
+brew install --cask iterm2
+brew install z
 brew install nvm
 mkdir ~/.nvm
 
