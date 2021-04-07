@@ -147,8 +147,11 @@ setuposwithbrew () {
   brew install bash
 
   echo "Installing packages I want"
+  brew tap homebrew/cask-fonts
+  brew install --cask font-fira-code
   brew install rust
   brew install diff-so-fancy
+  brew install postgresql
   brew install deno
   brew install rbenv
   brew install terraform
@@ -157,10 +160,13 @@ setuposwithbrew () {
   brew install cocoapods
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
-  brew install --cask google-chrome
   brew install --cask visual-studio-code
+  brew install --cask github
+
   brew install --cask slack
-  brew install postgresql
+  brew install --cask google-chrome
+  brew install --cask alfred
+  
 }
 
 ################################################################################
@@ -174,6 +180,14 @@ setupcoding () {
   cd "$HOME/code/executables"
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
+  
+  symlinks
+}
+
+symlinks () {
+  ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+  ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+  ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code/User
 }
 
 RUBY_GEMS=(
