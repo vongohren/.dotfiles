@@ -1,0 +1,28 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "alt+cmd+-",
+        "command": "workbench.action.terminal.focusNext"
+    },
+    { "key": "cmd+shift+1", "command": "workbench.action.terminal.focus"},
+    {
+        "key": "cmd+shift+1",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+[Semicolon]",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+[Minus]",
+        "command": "workbench.action.terminal.newInActiveWorkspace",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+cmd+7",
+        "command": "workbench.action.terminal.splitInActiveWorkspace",
+        "when": "terminalFocus"
+    }
+]

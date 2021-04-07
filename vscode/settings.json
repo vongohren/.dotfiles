@@ -1,0 +1,14 @@
+{
+    "editor.multiCursorModifier": "alt",
+    "vs-kubernetes": {
+        "vs-kubernetes.minikube-path": "/Users/snorre/.vs-kubernetes/tools/minikube/darwin-amd64/minikube"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "git.autofetch": true,
+    "debug.javascript.autoAttachFilter": "onlyWithFlag",
+}
