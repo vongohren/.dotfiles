@@ -1,28 +1,49 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     {
-        "key": "alt+cmd+-",
-        "command": "workbench.action.terminal.focusNext"
+        "key": "cmd+shift+[Period]",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus"
     },
     { "key": "cmd+shift+1", "command": "workbench.action.terminal.focus"},
+    {
+        "key": "shift+cmd+[Minus]",
+        "command": "workbench.action.terminal.newInActiveWorkspace",
+        "when": "terminalFocus"
+    },
     {
         "key": "cmd+shift+1",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
     },
     {
-        "key": "alt+cmd+[Semicolon]",
+        "key": "cmd+shift+-",
         "command": "workbench.action.terminal.kill",
         "when": "terminalFocus"
     },
     {
-        "key": "alt+cmd+[Minus]",
-        "command": "workbench.action.terminal.newInActiveWorkspace",
+        "key": "cmd+shift+7",
+        "command": "workbench.action.terminal.splitInActiveWorkspace",
         "when": "terminalFocus"
     },
     {
-        "key": "alt+cmd+7",
-        "command": "workbench.action.terminal.splitInActiveWorkspace",
-        "when": "terminalFocus"
+        "key": "shift+cmd+left",
+        "command": "workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+left",
+        "command": "-workbench.action.terminal.focusPreviousPane",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "shift+cmd+right",
+        "command": "workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+cmd+right",
+        "command": "-workbench.action.terminal.focusNextPane",
+        "when": "terminalFocus && terminalProcessSupported"
     }
 ]
