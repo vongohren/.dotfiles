@@ -97,26 +97,34 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 
-export CLOUDSDK_PYTHON=/Users/snorre/.pyenv/shims/python
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/code/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/code/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/code/google-cloud-sdk/completion.zsh.inc"; fi
+# Google cloud sdk python version and setup
+export CLOUDSDK_PYTHON=$(pyenv root)/shims/python
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 # Rbenv - https://github.com/rbenv/rbenv
 eval "$(rbenv init -)"
 
 # Pyenv - https://github.com/pyenv/pyenv
-eval "$(pyenv init -)"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; 
+then eval "$(pyenv init -)" 
+fi
+
+# Needed because of this: https://github.com/pyenv/pyenv/issues/1764#issuecomment-819395442
+pyenvinstall () {
+  LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" pyenv install $1
+}
 
 # Fastlane
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# Global yarn modules
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+# Div stuff
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
@@ -124,9 +132,8 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 # Initializing All the things
 ################################################################################
 startsetup () {
-  setupcoding
   setuposwithbrew
-  setupruby
+  setupcoding
 }
 
 ################################################################################
@@ -156,7 +163,13 @@ setuposwithbrew () {
   brew install rbenv
   brew install terraform
   brew install kubectl
+  
+  #Python setup
+  brew install openssl readline sqlite3 xz zlib
   brew install pyenv
+  pyenvinstall 3.8.6
+  pyenv global 3.8.6
+  
   brew install cocoapods
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
@@ -182,12 +195,14 @@ setupcoding () {
   cd "$HOME"
   
   symlinks
+  setupruby
 }
 
 symlinks () {
   ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
   ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
   ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code/User
+  ln -s ~/.dotfiles/.zshrc ~/.zshrc 
 }
 
 RUBY_GEMS=(
@@ -203,7 +218,7 @@ setupruby () {
 ################################################################################
 #Aliases
 ################################################################################
-alias reload='. ~/.zshrc' #Reload the source
+alias reload='source ~/.zshrc' #Reload the source
 port () {lsof -i :"$1";}
 alias f='open -a Finder ./'
 alias size='du -sh'
