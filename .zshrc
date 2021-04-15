@@ -154,6 +154,8 @@ setuposwithbrew () {
   brew install bash
 
   echo "Installing packages I want"
+
+  # Coding CLI tools for being able to develop as I want
   brew tap homebrew/cask-fonts
   brew install --cask font-fira-code
   brew install rust
@@ -163,19 +165,22 @@ setuposwithbrew () {
   brew install rbenv
   brew install terraform
   brew install kubectl
+  brew install cocoapods
+  brew install --cask google-cloud-sdk
+  brew install --cask adoptopenjdk
   
-  #Python setup
+  # Python setup
   brew install openssl readline sqlite3 xz zlib
   brew install pyenv
   pyenvinstall 3.8.6
   pyenv global 3.8.6
   
-  brew install cocoapods
-  brew install --cask google-cloud-sdk
-  brew install --cask adoptopenjdk
+  # Coding tools
   brew install --cask visual-studio-code
   brew install --cask github
+  brew install --cask postman
 
+  # General tools for mac
   brew install --cask slack
   brew install --cask google-chrome
   brew install --cask alfred
