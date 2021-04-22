@@ -69,6 +69,8 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
+setupdocker()
+
 ################################################################################
 #Functions to handle my environment
 ################################################################################
@@ -132,7 +134,7 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 # Initializing All the things
 ################################################################################
 startsetup () {
-  setuposwithbrew
+  setupos
   setupcoding
 }
 
@@ -140,7 +142,7 @@ startsetup () {
 # Initializing All things I need to install via brew
 ################################################################################
 
-setuposwithbrew () {
+setupos () {
   brew update
 
   echo "Installing brew updates and defaults"
@@ -162,18 +164,20 @@ setuposwithbrew () {
   brew install diff-so-fancy
   brew install postgresql
   brew install deno
-  brew install rbenv
   brew install terraform
   brew install kubectl
   brew install cocoapods
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
+
+  # Docker setup
+  setupdocker
   
   # Python setup
-  brew install openssl readline sqlite3 xz zlib
-  brew install pyenv
-  pyenvinstall 3.8.6
-  pyenv global 3.8.6
+  setuppython
+
+  # Ruby setup
+  setupruby
   
   # Coding tools
   brew install --cask visual-studio-code
@@ -200,7 +204,20 @@ setupcoding () {
   cd "$HOME"
   
   symlinks
-  setupruby
+}
+
+setuppython() {
+  brew install openssl readline sqlite3 xz zlib
+  brew install pyenv
+  pyenvinstall 3.8.6
+  pyenv global 3.8.6
+}
+
+setupdocker() {
+  brew install docker
+  etc=/Applications/Docker.app/Contents/Resources/etc
+  ln -s $etc/docker.bash-completion $(brew --prefix)/etc/bash_completion.d/docker
+  ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
 }
 
 symlinks () {
@@ -210,12 +227,13 @@ symlinks () {
   ln -s ~/.dotfiles/.zshrc ~/.zshrc 
 }
 
-RUBY_GEMS=(
-    bundler
-    filewatcher
-)
-
 setupruby () {
+  brew install rbenv
+  RUBY_GEMS=(
+      bundler
+      filewatcher
+  )
+
   echo "Installing Ruby gems"
   sudo gem install ${RUBY_GEMS[@]}
 }
