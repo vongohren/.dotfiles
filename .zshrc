@@ -170,6 +170,9 @@ setupos () {
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
 
+  # Hammerspoon setup
+  setuphammerspoon
+
   # Docker setup
   setupdocker
   
@@ -212,6 +215,12 @@ setuppython() {
   pyenvinstall 3.8.6
   pyenv global 3.8.6
 }
+
+setuphammerspoon () {
+  ln -s ~/.dotfiles/.hammerspoon ~/.hammerspoon
+  brew install --cask hammerspoon
+  
+} 
 
 setupdocker() {
   brew install docker
