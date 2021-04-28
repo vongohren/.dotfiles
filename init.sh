@@ -16,5 +16,5 @@ brew install nvm
 mkdir ~/.nvm
 
 
-cp ~/.dotfiles/.zshrc ~/.zshrc
+ln -s ~/.dotfiles/.zshrc ~/.zshrc
 source $ZSH/oh-my-zsh.sh
