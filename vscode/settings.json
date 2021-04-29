@@ -1,5 +1,4 @@
 {
-    "editor.multiCursorModifier": "alt",
     "vs-kubernetes": {
         "vs-kubernetes.minikube-path": "/Users/snorre/.vs-kubernetes/tools/minikube/darwin-amd64/minikube"
     },
@@ -11,4 +10,5 @@
     "javascript.updateImportsOnFileMove.enabled": "always",
     "git.autofetch": true,
     "debug.javascript.autoAttachFilter": "onlyWithFlag",
+    "editor.multiCursorModifier": "ctrlCmd",
 }
