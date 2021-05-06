@@ -82,11 +82,6 @@ setjdk() {
 #Set java version. Depends on what you have installed. /usr/libexec/java_home -V
 #https://stackoverflow.com/questions/21964709/how-to-set-or-change-the-default-java-jdk-version-on-os-x
 export JAVA_HOME=`/usr/libexec/java_home`
-export ANDROID_HOME="$HOME/code/android"
-export PATH=${PATH}:${ANDROID_HOME}
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/tools/bin
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 export FASTLANE="$HOME/.fastlane"
 export PATH=${PATH}:${FASTLANE}/bin
@@ -172,6 +167,9 @@ setupos () {
 
   # Hammerspoon setup
   setuphammerspoon
+  
+  # Android development setup
+  setupandroid
 
   # Docker setup
   setupdocker
@@ -207,6 +205,15 @@ setupcoding () {
   cd "$HOME"
   
   symlinks
+}
+
+setupandroid() {
+  # Need the tools to connect to the phone, adb comes with platform tools
+  # If you are using something like android studio, you need to point it to this sdk
+  # Output can be seen with $(brew --prefix)/share/android-sdk/
+  # Other direct tools such as abd & android are added to $(brew --prefix)/bin
+  brew install --cask android-sdk
+  brew install --cask android-platform-tools
 }
 
 setuppython() {
