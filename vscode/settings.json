@@ -10,5 +10,4 @@
     "javascript.updateImportsOnFileMove.enabled": "always",
     "git.autofetch": true,
     "debug.javascript.autoAttachFilter": "onlyWithFlag",
-    "editor.multiCursorModifier": "ctrlCmd",
 }
