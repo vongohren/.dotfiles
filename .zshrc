@@ -81,7 +81,7 @@ setjdk() {
 
 #Set java version. Depends on what you have installed. /usr/libexec/java_home -V
 #https://stackoverflow.com/questions/21964709/how-to-set-or-change-the-default-java-jdk-version-on-os-x
-export JAVA_HOME=`/usr/libexec/java_home`
+export JAVA_HOME=$(/usr/libexec/java_home -v 15)
 
 export FASTLANE="$HOME/.fastlane"
 export PATH=${PATH}:${FASTLANE}/bin
@@ -260,6 +260,7 @@ alias reload='source ~/.zshrc' #Reload the source
 port () {lsof -i :"$1";}
 alias f='open -a Finder ./'
 alias size='du -sh'
+alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 getEditorConfig () {
   cp ~/.dotfiles/personal/.editorconfig $1
