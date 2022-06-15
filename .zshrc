@@ -184,6 +184,7 @@ setupos () {
   brew install --cask visual-studio-code
   brew install --cask github
   brew install --cask postman
+  brew install --cask dbeaver-community
 
   # General tools for mac
   brew install --cask slack
