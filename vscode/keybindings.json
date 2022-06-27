@@ -1,11 +1,11 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     { 
-        "key": "cmd+shift+p", 
+        "key": "cmd+shift+i", 
         "command": "workbench.action.terminal.focus"
     },
     {
-        "key": "cmd+shift+p",
+        "key": "cmd+shift+i",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
     },
