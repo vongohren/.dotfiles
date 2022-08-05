@@ -68,6 +68,7 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 . `brew --prefix`/etc/profile.d/z.sh
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
+nvm use v14.19.2 --silent
 
 setupdocker()
 
@@ -255,7 +256,7 @@ setupruby () {
 }
 
 ################################################################################
-#Aliases
+# Aliases
 ################################################################################
 alias reload='source ~/.zshrc' #Reload the source
 port () {lsof -i :"$1";}
@@ -263,6 +264,10 @@ alias f='open -a Finder ./'
 alias size='du -sh'
 alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
+
+################################################################################
+# Aliases for code project start
+################################################################################
 getEditorConfig () {
   cp ~/.dotfiles/personal/.editorconfig $1
 }
