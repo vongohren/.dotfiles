@@ -266,17 +266,29 @@ alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 getEditorConfig () {
   cp ~/.dotfiles/personal/.editorconfig $1
 }
+getTsFiles () {
+  cp ~/.dotfiles/coding/scripts/startTypeScript.sh $1
+  cp ~/.dotfiles/coding/templates/tsconfig.json $1
+  cp ~/.dotfiles/coding/templates/.NODEgitignore $1/.gitignore
+}
+getCoreCodingFiles () {
+  cp ~/.dotfiles/coding/scripts/prepGit.sh $1
+  cp ~/.dotfiles/coding/templates/README.md $1
+} 
 kickstart () {
-  mkdir $1 && cd $1 && git init && yarn init --yes
-  touch .gitignore
+  mkdir $1 && cd $1
+  
+  getCoreCodingFiles $(pwd)
   getEditorConfig $(pwd)
-  code .
-  cp ~/.dotfiles/coding/scripts/startTypeScript.sh ./
-  cp ~/.dotfiles/coding/scripts/prepGit.sh ./
-  cp ~/.dotfiles/coding/templates/tsconfig.json ./
-  cp ~/.dotfiles/coding/templates/README.md ./
+  getTsFiles $(pwd)
+  
+  yarn init --yes
   ./startTypeScript.sh
+  code .
+
   rm startTypeScript.sh
+  ./prepGit.sh
   rm prepGit.sh
+  
   echo "You're fricking awesome 🤘 ✌️ 🤙"
 }
