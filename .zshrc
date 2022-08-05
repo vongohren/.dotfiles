@@ -267,8 +267,16 @@ getEditorConfig () {
   cp ~/.dotfiles/personal/.editorconfig $1
 }
 kickstart () {
-  mkdir $1 && cd $1 && git init && yarn init --yes && code .
+  mkdir $1 && cd $1 && git init && yarn init --yes
   touch .gitignore
   getEditorConfig $(pwd)
+  code .
+  cp ~/.dotfiles/coding/scripts/startTypeScript.sh ./
+  cp ~/.dotfiles/coding/scripts/prepGit.sh ./
+  cp ~/.dotfiles/coding/templates/tsconfig.json ./
+  cp ~/.dotfiles/coding/templates/README.md ./
+  ./startTypeScript.sh
+  rm startTypeScript.sh
+  rm prepGit.sh
   echo "You're fricking awesome 🤘 ✌️ 🤙"
 }
