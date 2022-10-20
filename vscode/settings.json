@@ -10,4 +10,6 @@
     "javascript.updateImportsOnFileMove.enabled": "always",
     "git.autofetch": true,
     "debug.javascript.autoAttachFilter": "onlyWithFlag",
+    "typescript.implementationsCodeLens.enabled": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
 }
