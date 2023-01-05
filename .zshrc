@@ -259,6 +259,28 @@ setupruby () {
   sudo gem install ${RUBY_GEMS[@]}
 }
 
+setupgitkeys() {
+  read "email?What's your githubemail? " 
+  echo "Using email $email"
+  if [ ! -f ~/.ssh/id_rsa ]; then
+    ssh-keygen -t rsa -b 4096 -C "$email"
+    ssh-add ~/.ssh/id_rsa
+  fi
+  pub=`cat ~/.ssh/id_rsa.pub`
+  read "token?Enter github personal token: "
+  echo "Using otp $token"
+  echo
+
+  curl \
+  -X POST \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $token"\
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/user/keys \
+  -d "{\"title\":\"`hostname`\",\"key\":\"$pub\"}"
+
+}
+
 ################################################################################
 # Aliases
 ################################################################################
