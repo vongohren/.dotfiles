@@ -153,6 +153,15 @@ setupos () {
 
   echo "Installing packages I want"
 
+  # Utilties
+  brew install defaultbrowser
+
+  # General tools for mac
+  brew install --cask slack
+  brew install --cask google-chrome
+  osascript ~/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
+  brew install --cask alfred
+
   # Coding CLI tools for being able to develop as I want
   brew tap homebrew/cask-fonts
   brew install --cask font-fira-code
@@ -186,11 +195,6 @@ setupos () {
   brew install --cask github
   brew install --cask postman
   brew install --cask dbeaver-community
-
-  # General tools for mac
-  brew install --cask slack
-  brew install --cask google-chrome
-  brew install --cask alfred
   
 }
 
