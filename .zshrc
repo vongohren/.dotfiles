@@ -260,6 +260,10 @@ setupruby () {
 }
 
 setupgitkeys() {
+  # Inspo
+  # https://gist.github.com/juanique/4092969
+  # Updated api: https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#create-a-public-ssh-key-for-the-authenticated-user
+
   read "email?What's your githubemail? " 
   echo "Using email $email"
   if [ ! -f ~/.ssh/id_rsa ]; then
@@ -267,7 +271,8 @@ setupgitkeys() {
     ssh-add ~/.ssh/id_rsa
   fi
   pub=`cat ~/.ssh/id_rsa.pub`
-  read "token?Enter github personal token: "
+
+  read "token?Enter github personal token, fetch it here https://github.com/settings/tokens: "
   echo "Using otp $token"
   echo
 
