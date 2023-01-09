@@ -189,9 +189,11 @@ setupos () {
 
   # Ruby setup
   setupruby
+
+  # Setup Visual Code
+  setupvisualcode
   
   # Coding tools
-  brew install --cask visual-studio-code
   brew install --cask github
   brew install --cask postman
   brew install --cask dbeaver-community
@@ -209,8 +211,6 @@ setupcoding () {
   cd "$HOME/code/executables"
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
-  
-  symlinks
 }
 
 setupandroid() {
@@ -220,6 +220,14 @@ setupandroid() {
   # Other direct tools such as abd & android are added to $(brew --prefix)/bin
   brew install --cask android-sdk
   brew install --cask android-platform-tools
+}
+
+setupvisualcode() {
+  brew install --cask visual-studio-code
+  mkdir ~/Library/Application\ Support/Code/User/
+  ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
+  ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
+  ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code/User 
 }
 
 setuppython() {
@@ -243,9 +251,7 @@ setupdocker() {
 }
 
 symlinks () {
-  ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
-  ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
-  ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code/User 
+
 }
 
 setupruby () {
