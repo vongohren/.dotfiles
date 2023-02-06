@@ -12,4 +12,9 @@
     "debug.javascript.autoAttachFilter": "onlyWithFlag",
     "typescript.implementationsCodeLens.enabled": true,
     "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "cSpell.userWords": [
+        "artifactregistry",
+        "digitalcredentials",
+        "npmrc"
+    ],
 }

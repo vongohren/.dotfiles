@@ -174,7 +174,11 @@ setupos () {
   brew install cocoapods
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
+<<<<<<< Updated upstream
   brew install jq
+=======
+  brew install redis
+>>>>>>> Stashed changes
 
   # Hammerspoon setup
   setuphammerspoon
