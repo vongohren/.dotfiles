@@ -169,8 +169,11 @@ setupos () {
   brew install diff-so-fancy
   brew install postgresql
   brew install deno
-  brew install terraform
+  brew install tfenv
+  
   brew install kubectl
+  export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
   brew install cocoapods
   brew install --cask google-cloud-sdk
   brew install --cask adoptopenjdk
