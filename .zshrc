@@ -157,6 +157,7 @@ setupos () {
   brew install defaultbrowser
 
   # General tools for mac
+  brew install --cask raycast
   brew install --cask slack
   brew install --cask google-chrome
   osascript ~/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
