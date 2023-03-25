@@ -161,7 +161,6 @@ setupos () {
   brew install --cask slack
   brew install --cask google-chrome
   osascript ~/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
-  brew install --cask alfred
 
   # Coding CLI tools for being able to develop as I want
   brew tap homebrew/cask-fonts
