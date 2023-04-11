@@ -306,6 +306,7 @@ alias f='open -a Finder ./'
 alias size='du -sh'
 alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
+alias itj='/usr/local/bin/idea'
 
 ################################################################################
 # Aliases for code project start
@@ -339,3 +340,9 @@ kickstart () {
   
   echo "You're fricking awesome 🤘 ✌️ 🤙"
 }
+
+pruneGitLocal () {
+  git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done
+}
+
+source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
