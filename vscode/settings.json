@@ -17,4 +17,5 @@
         "digitalcredentials",
         "npmrc"
     ],
+    "editor.inlineSuggest.enabled": true,
 }

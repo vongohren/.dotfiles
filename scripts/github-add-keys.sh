@@ -1,3 +1,5 @@
+# Description: Add a public key to github
+
 rm -rf ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
 read -p "Enter github email : " email
 echo "Using email $email"
