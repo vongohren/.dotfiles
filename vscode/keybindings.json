@@ -47,5 +47,13 @@
         "key": "alt+cmd+right",
         "command": "-workbench.action.terminal.focusNextPane",
         "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "alt+n",
+        "command": "github.copilot.nextPanelSolution"
+    },
+    {
+        "key": "alt+b",
+        "command": "github.copilot.previousPanelSolution"
     }
 ]
