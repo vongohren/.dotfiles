@@ -55,5 +55,9 @@
     {
         "key": "alt+b",
         "command": "github.copilot.previousPanelSolution"
+    },
+    {
+        "key": "shift+cmd+[BracketLeft]",
+        "command": "workbench.panel.chat.view.copilot.focus"
     }
 ]

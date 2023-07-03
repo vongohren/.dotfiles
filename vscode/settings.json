@@ -18,4 +18,5 @@
         "npmrc"
     ],
     "editor.inlineSuggest.enabled": true,
+    "svelte.enable-ts-plugin": true,
 }

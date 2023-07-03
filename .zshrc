@@ -312,6 +312,8 @@ alias size='du -sh'
 alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 alias itj='/usr/local/bin/idea'
+alias code='code-insiders'
+alias codeold='code'
 
 ################################################################################
 # Aliases for code project start
