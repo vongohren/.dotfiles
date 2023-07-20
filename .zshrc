@@ -72,6 +72,9 @@ nvm use v14.19.2 --silent
 
 setupdocker()
 
+#Setting begining of java
+jabba use openjdk@1.17.0 
+
 ################################################################################
 #Functions to handle my environment
 ################################################################################
