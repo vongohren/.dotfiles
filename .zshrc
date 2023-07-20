@@ -76,14 +76,6 @@ setupdocker()
 #Functions to handle my environment
 ################################################################################
 
-setjdk() {
-  export JAVA_HOME=$(/usr/libexec/java_home -v $1)
-}
-
-#Set java version. Depends on what you have installed. /usr/libexec/java_home -V
-#https://stackoverflow.com/questions/21964709/how-to-set-or-change-the-default-java-jdk-version-on-os-x
-export JAVA_HOME=$(/usr/libexec/java_home -v 15)
-
 export FASTLANE="$HOME/.fastlane"
 export PATH=${PATH}:${FASTLANE}/bin
 
@@ -202,7 +194,9 @@ setupos () {
   brew install --cask github
   brew install --cask postman
   brew install --cask dbeaver-community
-  
+
+  export JABBA_VERSION=0.11.2                                                                                                      ~/.dotfiles(master✗)@Snorres-MacBook-Pro.local
+  curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
 }
 
 ################################################################################
@@ -353,3 +347,5 @@ pruneGitLocal () {
 }
 
 source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+[ -s "/Users/vongohren/.jabba/jabba.sh" ] && source "/Users/vongohren/.jabba/jabba.sh"
