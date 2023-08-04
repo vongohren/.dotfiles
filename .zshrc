@@ -352,4 +352,5 @@ pruneGitLocal () {
 
 source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-[ -s "/Users/vongohren/.jabba/jabba.sh" ] && source "/Users/vongohren/.jabba/jabba.sh"
+[ -s "/Users/vongohren/.jabba/jabba.sh" ] && source "/Users/vongohren/.jabba/jabba.sh" # Added by Jabba
+jabba use openjdk@1.17.0
