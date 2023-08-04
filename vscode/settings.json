@@ -17,6 +17,16 @@
         "digitalcredentials",
         "npmrc"
     ],
-    "editor.inlineSuggest.enabled": true,
     "svelte.enable-ts-plugin": true,
+    "github.copilot.enable": {
+        "javascript": true,
+        "*": true,
+        "yaml": false,
+        "plaintext": false,
+        "markdown": false
+    },
+    "editor.inlineSuggest.enabled": true,
+    "[python]": {
+        "editor.formatOnType": true
+    }
 }
