@@ -226,7 +226,8 @@ setupandroid() {
 
 setupvisualcode() {
   brew install --cask visual-studio-code
-  brew install --cask visual-studio-code-insiders
+  brew tap homebrew/cask-versions
+  brew install visual-studio-code-insiders
   mkdir ~/Library/Application\ Support/Code/User/
   mkdir ~/Library/Application\ Support/Code\ -\ Insiders/User/
   ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
@@ -309,7 +310,7 @@ alias size='du -sh'
 alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
 alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 alias itj='/usr/local/bin/idea'
-alias code='code-insider'
+alias code='code-insiders'
 alias codeold='code'
 
 ################################################################################
