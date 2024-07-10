@@ -28,5 +28,6 @@
     "editor.inlineSuggest.enabled": true,
     "[python]": {
         "editor.formatOnType": true
-    }
+    },
+    "svg.preview.mode": "img"
 }

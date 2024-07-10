@@ -72,9 +72,6 @@ nvm use v14.19.2 --silent
 
 setupdocker()
 
-#Setting begining of java
-jabba use openjdk@1.17.0 
-
 ################################################################################
 #Functions to handle my environment
 ################################################################################
@@ -92,8 +89,8 @@ export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 
 # Google cloud sdk python version and setup
 export CLOUDSDK_PYTHON=$(pyenv root)/shims/python
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+source "$HOME/google-cloud-sdk/path.zsh.inc"
+source "$HOME/google-cloud-sdk/completion.zsh.inc"
 
 # Rbenv - https://github.com/rbenv/rbenv
 eval "$(rbenv init -)"
@@ -198,8 +195,7 @@ setupos () {
   brew install --cask postman
   brew install --cask dbeaver-community
 
-  export JABBA_VERSION=0.11.2                                                                                                      ~/.dotfiles(master✗)@Snorres-MacBook-Pro.local
-  curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+  curl -s "https://get.sdkman.io" | bash
 }
 
 ################################################################################
@@ -312,6 +308,7 @@ alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 alias itj='/usr/local/bin/idea'
 alias code='code-insiders'
 alias codeold='code'
+alias gcloud='~/google-cloud-sdk/bin/gcloud'
 
 ################################################################################
 # Aliases for code project start
@@ -328,7 +325,8 @@ getCoreCodingFiles () {
   cp ~/.dotfiles/coding/scripts/prepGit.sh $1
   cp ~/.dotfiles/coding/templates/README.md $1
 } 
-kickstart () {
+ks-ts () {
+  # Create a new TypeScript project using KICKSTART
   mkdir $1 && cd $1
   
   getCoreCodingFiles $(pwd)
@@ -352,5 +350,12 @@ pruneGitLocal () {
 
 source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
 
-[ -s "/Users/vongohren/.jabba/jabba.sh" ] && source "/Users/vongohren/.jabba/jabba.sh" # Added by Jabba
-jabba use openjdk@1.17.0
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
