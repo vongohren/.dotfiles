@@ -1,7 +1,3 @@
-
-
-
-
 ################################################################################
 # 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 # To start the ball, please call init script!!
@@ -61,14 +57,31 @@ setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a d
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
 setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 
+
 ################################################################################
-#Sourcing and env variables
+# 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
+# Sourcing - source ~/.zshrc
+# 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
 ################################################################################
+
+
+if [ -f ~/.entur ]; then
+  source ~/.entur
+fi
+
+source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-nvm use v14.19.2 --silent
 
 setupdocker()
 
@@ -348,14 +361,11 @@ pruneGitLocal () {
   git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done
 }
 
-source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+################################################################################
+# Special end of file cases
+################################################################################
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
