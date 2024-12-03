@@ -12,9 +12,17 @@ git clone https://github.com/paulirish/git-open.git ~/.oh-my-zsh/custom/plugins/
 
 brew install --cask iterm2
 brew install z
-brew install nvm
-mkdir ~/.nvm
 
 rm ~/.zshrc
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
+ln -s ~/code/.dotfiles/.zshrc ~/.zshrc
 source $ZSH/oh-my-zsh.sh
+
+setupvisualcode() {
+  brew install --cask visual-studio-code@insiders
+  mkdir ~/Library/Application\ Support/Code\ -\ Insiders/User/
+  ln -s ~/code/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code\ -\ Insiders/User/settings.json
+  ln -s ~/code/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code\ -\ Insiders/User/keybindings.json
+  ln -s ~/code/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code\ -\ Insiders/User
+}
+
+setupvisualcode

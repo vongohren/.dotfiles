@@ -6,3 +6,5 @@
 
 #Mac shit
 .DS_Store
+.aider*
+.env

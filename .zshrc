@@ -63,38 +63,6 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 # Sourcing - source ~/.zshrc
 # 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
 ################################################################################
-
-
-if [ -f ~/.entur ]; then
-  source ~/.entur
-fi
-
-source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/vongohren/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
-#z command https://github.com/rupa/z installed by brew
-. `brew --prefix`/etc/profile.d/z.sh
-
-setupdocker()
-
-################################################################################
-#Functions to handle my environment
-################################################################################
-
-export FASTLANE="$HOME/.fastlane"
-export PATH=${PATH}:${FASTLANE}/bin
-
-export EXECUTABLES="$HOME/code/executables"
-export PATH=${PATH}:${EXECUTABLES}
-
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
@@ -102,8 +70,8 @@ export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 
 # Google cloud sdk python version and setup
 export CLOUDSDK_PYTHON=$(pyenv root)/shims/python
-source "$HOME/google-cloud-sdk/path.zsh.inc"
-source "$HOME/google-cloud-sdk/completion.zsh.inc"
+source "$HOME/code/utils/google-cloud-sdk/path.zsh.inc"
+source "$HOME/code/utils/google-cloud-sdk/completion.zsh.inc"
 
 # Rbenv - https://github.com/rbenv/rbenv
 eval "$(rbenv init -)"
@@ -114,6 +82,11 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; 
 then eval "$(pyenv init -)" 
 fi
+
+source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
+
+#z command https://github.com/rupa/z installed by brew
+. `brew --prefix`/etc/profile.d/z.sh
 
 # Needed because of this: https://github.com/pyenv/pyenv/issues/1764#issuecomment-819395442
 pyenvinstall () {
@@ -126,6 +99,9 @@ export LANG=en_US.UTF-8
 
 # Global yarn modules
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export VOLTA_HOME="$HOME/.volta"
+export PATH=$PATH:"$VOLTA_HOME/bin"
 
 # Div stuff
 autoload -U +X bashcompinit && bashcompinit
@@ -165,44 +141,34 @@ setupos () {
   brew install --cask raycast
   brew install --cask slack
   brew install --cask google-chrome
-  osascript ~/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
+  osascript ~/code/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
 
   # Coding CLI tools for being able to develop as I want
   brew tap homebrew/cask-fonts
   brew install --cask font-fira-code
-  brew install rust
-  brew install diff-so-fancy
   brew install postgresql
-  brew install deno
   brew install tfenv
-  
-  brew install kubectl
-  export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-  brew install cocoapods
   brew install --cask google-cloud-sdk
-  brew install --cask adoptopenjdk
-  brew install jq
   brew install redis
+  brew install jq
 
   # Hammerspoon setup
   setuphammerspoon
-  
-  # Android development setup
-  setupandroid
 
   # Docker setup
   setupdocker
+
+  # Languages
   
   # Python setup
   setuppython
 
   # Ruby setup
   setupruby
+  brew install deno
+  brew install go
+  brew install rust
 
-  # Setup Visual Code
-  setupvisualcode
-  
   # Coding tools
   
   ## Node version manager
@@ -210,64 +176,31 @@ setupos () {
   
   brew install --cask github
   brew install --cask postman
-  brew install --cask dbeaver-community
-
-  curl -s "https://get.sdkman.io" | bash
-  
-  
 }
 
 ################################################################################
-# Setup ready for coding
+# Setup coding functions
 ################################################################################
 
 setupcoding () {
-  echo "Setup some code related vars and simple executables"
-  mkdir "$HOME/code"
-  mkdir "$HOME/code/executables"
-  cd "$HOME/code/executables"
-  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
-  cd "$HOME"
-}
-
-setupandroid() {
-  # Need the tools to connect to the phone, adb comes with platform tools
-  # If you are using something like android studio, you need to point it to this sdk
-  # Output can be seen with $(brew --prefix)/share/android-sdk/
-  # Other direct tools such as abd & android are added to $(brew --prefix)/bin
-  brew install --cask android-sdk
-  brew install --cask android-platform-tools
-}
-
-setupvisualcode() {
-  brew install --cask visual-studio-code
-  brew tap homebrew/cask-versions
-  brew install visual-studio-code-insiders
-  mkdir ~/Library/Application\ Support/Code/User/
-  mkdir ~/Library/Application\ Support/Code\ -\ Insiders/User/
-  ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code/User/settings.json
-  ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code/User/keybindings.json
-  ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code/User 
-  ln -s ~/.dotfiles/vscode/settings.json ~/Library/Application\ Support/Code - Insiders/User/settings.json
-  ln -s ~/.dotfiles/vscode/keybindings.json ~/Library/Application\ Support/Code - Insiders/User/keybindings.json
-  ln -s ~/.dotfiles/vscode/snippets/ ~/Library/Application\ Support/Code\ -\ Insiders/User
+  echo "Currently no special coding stuff to do"
 }
 
 setuppython() {
   brew install openssl readline sqlite3 xz zlib
   brew install pyenv
-  pyenvinstall 3.8.6
-  pyenv global 3.8.6
+  pyenv install 3.10.0
+  pyenv global 3.10.0
 }
 
 setuphammerspoon () {
-  ln -s ~/.dotfiles/.hammerspoon ~/.hammerspoon
+  ln -s ~/code/.dotfiles/.hammerspoon ~/.hammerspoon
   brew install --cask hammerspoon
   
 } 
 
 setupdocker() {
-  brew install docker
+  brew install --cask docker
   etc=/Applications/Docker.app/Contents/Resources/etc
   ln -s $etc/docker.bash-completion $(brew --prefix)/etc/bash_completion.d/docker
   ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
@@ -288,31 +221,26 @@ setupruby () {
   sudo gem install ${RUBY_GEMS[@]}
 }
 
-setupgitkeys() {
-  # Inspo
-  # https://gist.github.com/juanique/4092969
-  # Updated api: https://docs.github.com/en/rest/users/keys?apiVersion=2022-11-28#create-a-public-ssh-key-for-the-authenticated-user
+ setupgcloud() {                                                                                                                                                                                      
+   local url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-darwin-arm.tar.gz"
+   local download_dir="$HOME/Downloads"
+   local install_dir="$HOME/code/utils/google-cloud-sdk"
+   local tar_file="$download_dir/google-cloud-sdk.tar.gz"
 
-  read "email?What's your githubemail? " 
-  echo "Using email $email"
-  if [ ! -f ~/.ssh/id_rsa ]; then
-    ssh-keygen -t rsa -b 4096 -C "$email"
-    ssh-add ~/.ssh/id_rsa
-  fi
-  pub=`cat ~/.ssh/id_rsa.pub`
+   # Download the tar.gz file
+   curl -o "$tar_file" "$url"
 
-  read "token?Enter github personal token, fetch it here https://github.com/settings/tokens: "
-  echo "Using otp $token"
-  echo
+   # Create the install directory if it doesn't exist
+   mkdir -p "$install_dir"
 
-  curl \
-  -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $token"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/user/keys \
-  -d "{\"title\":\"`hostname`\",\"key\":\"$pub\"}"
+   # Extract the tar.gz file
+   tar -xzf "$tar_file" -C "$install_dir" --strip-components=1
 
+   # Run the install script
+   bash "$install_dir/install.sh"
+
+   # Remove the tar.gz file
+   rm "$tar_file"
 }
 
 ################################################################################
@@ -327,22 +255,22 @@ alias bundletools='java -jar ~/code/scripts/bundletool.jar'
 alias itj='/usr/local/bin/idea'
 alias code='code-insiders'
 alias codeold='code'
-alias gcloud='~/google-cloud-sdk/bin/gcloud'
+alias gcloud='~/code/utils/google-cloud-sdk/bin/gcloud'
 
 ################################################################################
 # Aliases for code project start
 ################################################################################
 getEditorConfig () {
-  cp ~/.dotfiles/personal/.editorconfig $1
+  cp ~/code/.dotfiles/personal/.editorconfig $1
 }
 getTsFiles () {
-  cp ~/.dotfiles/coding/scripts/startTypeScript.sh $1
-  cp ~/.dotfiles/coding/templates/tsconfig.json $1
-  cp ~/.dotfiles/coding/templates/.NODEgitignore $1/.gitignore
+  cp ~/code/.dotfiles/coding/scripts/startTypeScript.sh $1
+  cp ~/code/.dotfiles/coding/templates/tsconfig.json $1
+  cp ~/code/.dotfiles/coding/templates/.NODEgitignore $1/.gitignore
 }
 getCoreCodingFiles () {
-  cp ~/.dotfiles/coding/scripts/prepGit.sh $1
-  cp ~/.dotfiles/coding/templates/README.md $1
+  cp ~/code/.dotfiles/coding/scripts/prepGit.sh $1
+  cp ~/code/.dotfiles/coding/templates/README.md $1
 } 
 ks-ts () {
   # Create a new TypeScript project using KICKSTART
@@ -367,11 +295,46 @@ pruneGitLocal () {
   git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done
 }
 
-
 ################################################################################
-# Special end of file cases
+# Legacy functions
 ################################################################################
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+# OSSetup function legacy
+mylegacybackpackosstuff() {
+  # Android development setup
+  setupandroid
+
+  # Stuff used beforefin
+  brew install kubectl
+  export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+  brew install cocoapods
+  
+  brew install --cask adoptopenjdk
+
+  # DB reader
+  brew install --cask dbeaver-community
+
+  # IF I WANT TO DO JAVA AGAIN, this is the shitnizz
+  curl -s "https://get.sdkman.io" | bash
+}
+
+# Coding function legacy
+legacycodingstuff () {
+  echo "Setup some code related vars and simple executables"
+  mkdir "$HOME/code"
+  mkdir "$HOME/code/executables"
+  cd "$HOME/code/executables"
+  curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
+  cd "$HOME"
+}
+
+# Alias function legacy
+setupandroid() {
+  # Need the tools to connect to the phone, adb comes with platform tools
+  # If you are using something like android studio, you need to point it to this sdk
+  # Output can be seen with $(brew --prefix)/share/android-sdk/
+  # Other direct tools such as abd & android are added to $(brew --prefix)/bin
+  brew install --cask android-sdk
+  brew install --cask android-platform-tools
+}
