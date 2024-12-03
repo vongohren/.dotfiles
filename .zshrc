@@ -83,7 +83,12 @@ if command -v pyenv 1>/dev/null 2>&1;
 then eval "$(pyenv init -)" 
 fi
 
-source /Users/vongohren/.docker/init-zsh.sh || true # Added by Docker Desktop
+# Added by Windsurf
+export PATH="/Users/vongohren/.codeium/windsurf/bin:$PATH"
+alias surf="windsurf"
+
+# Added by Docker Desktop
+source /Users/vongohren/.docker/init-zsh.sh || true 
 
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
@@ -226,21 +231,21 @@ setupruby () {
    local download_dir="$HOME/Downloads"
    local install_dir="$HOME/code/utils/google-cloud-sdk"
    local tar_file="$download_dir/google-cloud-sdk.tar.gz"
-
    # Download the tar.gz file
    curl -o "$tar_file" "$url"
-
    # Create the install directory if it doesn't exist
    mkdir -p "$install_dir"
-
    # Extract the tar.gz file
    tar -xzf "$tar_file" -C "$install_dir" --strip-components=1
-
    # Run the install script
    bash "$install_dir/install.sh"
-
    # Remove the tar.gz file
    rm "$tar_file"
+}
+
+setupwindsurf() {
+  # https://codeium.com/windsurf
+  brew install --cask windsurf
 }
 
 ################################################################################
