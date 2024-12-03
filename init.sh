@@ -1,5 +1,11 @@
 #/bin/bash
 
+# Check if ~/code directory exists, if not, create it
+if [ ! -d "$HOME/code" ]; then
+    echo "Creating ~/code directory..."
+    mkdir -p "$HOME/code"
+fi
+
 if test ! $(which brew); then
     echo "Installing homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
