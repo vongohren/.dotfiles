@@ -14,7 +14,7 @@ export APPLICATION_SUPPORT=~/Library/Application\ Support
 ################################################################################
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="random"
-plugins=(git npm brew osx zsh-syntax-highlighting zsh-autosuggestions git-open)
+plugins=(git npm brew zsh-syntax-highlighting zsh-autosuggestions git-open)
 #https://github.com/zsh-users/zsh-autosuggestions
 #https://github.com/zsh-users/zsh-syntax-highlighting
 source $ZSH/oh-my-zsh.sh
