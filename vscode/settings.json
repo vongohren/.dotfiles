@@ -1,4 +1,8 @@
 {
+    // Windsurf specific settings
+    "workbench.colorTheme": "SynthWave84",
+    "windsurf.autocompleteSpeed": "fast",
+    // VS Code general settings
     "vs-kubernetes": {
         "vs-kubernetes.minikube-path": "/Users/snorre/.vs-kubernetes/tools/minikube/darwin-amd64/minikube"
     },

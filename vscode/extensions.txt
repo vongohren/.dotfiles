@@ -1,0 +1,9 @@
+alefragnani.project-manager
+codezombiech.gitignore
+donjayamanne.git-extension-pack
+donjayamanne.githistory
+eamodio.gitlens
+github.copilot
+github.copilot-chat
+postman.postman-for-vscode
+ziyasal.vscode-open-in-github

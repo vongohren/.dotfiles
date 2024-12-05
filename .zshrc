@@ -4,6 +4,9 @@
 # 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 ################################################################################
 
+export DOTFILE_LOCATION=~/code/.dotfiles
+export APPLICATION_SUPPORT=~/Library/Application\ Support
+
 
 
 ################################################################################
@@ -87,9 +90,6 @@ fi
 export PATH="/Users/vongohren/.codeium/windsurf/bin:$PATH"
 alias surf="windsurf"
 
-# Added by Docker Desktop
-source /Users/vongohren/.docker/init-zsh.sh || true 
-
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
 
@@ -113,83 +113,8 @@ autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
 ################################################################################
-# Initializing All the things
+# Setup functions for wanted dependencies
 ################################################################################
-startsetup () {
-  setupos
-  setupcoding
-}
-
-################################################################################
-# Initializing All things I need to install via brew
-################################################################################
-
-setupos () {
-  brew update
-
-  echo "Installing brew updates and defaults"
-  brew tap homebrew/dupes
-  brew install coreutils
-
-  # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-  brew install findutils
-
-  # Install Bash 4
-  brew install bash
-
-  echo "Installing packages I want"
-
-  # Utilties
-  brew install defaultbrowser
-
-  # General tools for mac
-  brew install --cask raycast
-  brew install --cask slack
-  brew install --cask google-chrome
-  osascript ~/code/.dotfiles/scripts/setdefaultbrowserauto.scpt chrome
-
-  # Coding CLI tools for being able to develop as I want
-  brew tap homebrew/cask-fonts
-  brew install --cask font-fira-code
-  brew install postgresql
-  brew install tfenv
-  brew install --cask google-cloud-sdk
-  brew install redis
-  brew install jq
-
-  # Hammerspoon setup
-  setuphammerspoon
-
-  # Docker setup
-  setupdocker
-
-  # Languages
-  
-  # Python setup
-  setuppython
-
-  # Ruby setup
-  setupruby
-  brew install deno
-  brew install go
-  brew install rust
-
-  # Coding tools
-  
-  ## Node version manager
-  curl https://get.volta.sh | bash -s -- --skip-setup
-  
-  brew install --cask github
-  brew install --cask postman
-}
-
-################################################################################
-# Setup coding functions
-################################################################################
-
-setupcoding () {
-  echo "Currently no special coding stuff to do"
-}
 
 setuppython() {
   brew install openssl readline sqlite3 xz zlib
@@ -199,7 +124,7 @@ setuppython() {
 }
 
 setuphammerspoon () {
-  ln -s ~/code/.dotfiles/.hammerspoon ~/.hammerspoon
+  ln -s $DOTFILE_LOCATION/.hammerspoon ~/.hammerspoon
   brew install --cask hammerspoon
   
 } 
@@ -209,10 +134,6 @@ setupdocker() {
   etc=/Applications/Docker.app/Contents/Resources/etc
   ln -s $etc/docker.bash-completion $(brew --prefix)/etc/bash_completion.d/docker
   ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
-}
-
-symlinks () {
-
 }
 
 setupruby () {
@@ -243,39 +164,77 @@ setupruby () {
    rm "$tar_file"
 }
 
+setupvscode() {
+  brew install --cask visual-studio-code@insiders
+  ln -s $DOTFILE_LOCATION/vscode/settings.json $APPLICATION_SUPPORT/Code - Insiders/User/settings.json
+  ln -s $DOTFILE_LOCATION/vscode/keybindings.json $APPLICATION_SUPPORT/Code - Insiders/User/keybindings.json
+  ln -s $DOTFILE_LOCATION/vscode/snippets/ $APPLICATION_SUPPORT/Code\ -\ Insiders/User
+
+  while read extension; do
+    surf --install-extension "$extension"
+  done < $DOTFILE_LOCATION/vscode/extensions.txt
+}
+
 setupwindsurf() {
-  # https://codeium.com/windsurf
+  # https://codeium.com/windsurf 
   brew install --cask windsurf
+  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/settings.json" ]; then
+    rm "$APPLICATION_SUPPORT/Windsurf/User/settings.json"
+  fi
+  ln -s $DOTFILE_LOCATION/vscode/settings.json $APPLICATION_SUPPORT/Windsurf/User/settings.json
+  
+  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json" ]; then
+    rm "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json"
+  fi
+  ln -s $DOTFILE_LOCATION/vscode/keybindings.json $APPLICATION_SUPPORT/Windsurf/User/keybindings.json
+  
+  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json" ]; then
+    rm "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json"
+  fi
+  ln -s $DOTFILE_LOCATION/vscode/snippets/ $APPLICATION_SUPPORT/Windsurf/User
+
+  while read extension; do
+    surf --install-extension "$extension"
+  done < $DOTFILE_LOCATION/vscode/extensions.txt
+}
+
+setupdoppler() {
+  # Prerequisite. gnupg is required for binary signature verification
+  brew install gnupg
+  # Next, install using brew (use `doppler update` for subsequent updates)
+  brew install dopplerhq/cli/doppler
 }
 
 ################################################################################
 # Aliases
 ################################################################################
-alias reload='source ~/.zshrc' #Reload the source
+alias reload="source ~/.zshrc" #Reload the source
 port () {lsof -i :"$1";}
-alias f='open -a Finder ./'
-alias size='du -sh'
-alias linked='( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l'
-alias bundletools='java -jar ~/code/scripts/bundletool.jar'
-alias itj='/usr/local/bin/idea'
-alias code='code-insiders'
-alias codeold='code'
-alias gcloud='~/code/utils/google-cloud-sdk/bin/gcloud'
+alias f="open -a Finder ./"
+alias size="du -sh"
+alias linked="( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l"
+alias bundletools="java -jar ~/code/scripts/bundletool.jar"
+alias itj="/usr/local/bin/idea"
+alias code="code-insiders"
+alias codeold="code"
+alias gcloud="~/code/utils/google-cloud-sdk/bin/gcloud"
+alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
+alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
 
 ################################################################################
 # Aliases for code project start
 ################################################################################
 getEditorConfig () {
-  cp ~/code/.dotfiles/personal/.editorconfig $1
+  cp $DOTFILE_LOCATION/personal/.editorconfig $1
 }
 getTsFiles () {
-  cp ~/code/.dotfiles/coding/scripts/startTypeScript.sh $1
-  cp ~/code/.dotfiles/coding/templates/tsconfig.json $1
-  cp ~/code/.dotfiles/coding/templates/.NODEgitignore $1/.gitignore
+  cp $DOTFILE_LOCATION/coding/scripts/startTypeScript.sh $1
+  cp $DOTFILE_LOCATION/coding/templates/tsconfig.json $1
+  cp $DOTFILE_LOCATION/coding/templates/.NODEgitignore $1/.gitignore
 }
 getCoreCodingFiles () {
-  cp ~/code/.dotfiles/coding/scripts/prepGit.sh $1
-  cp ~/code/.dotfiles/coding/templates/README.md $1
+  cp $DOTFILE_LOCATION/coding/scripts/prepGit.sh $1
+  cp $DOTFILE_LOCATION/coding/templates/README.md $1
 } 
 ks-ts () {
   # Create a new TypeScript project using KICKSTART
