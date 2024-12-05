@@ -16,7 +16,8 @@ Then you can run start `setupos` alias or [the script](scripts/setupos.sh) itsel
 
 Followed by a current work alias `setupcurrentwork` or [the script](scripts/setup-current-work-needs.sh) for dependencies related to current work. This is to avoid personal and work dependencies.
 
-# Info
-Try to read the brew packages to understand what things does
-Also there is left some inline comments to explain what lines do
+# VS Code
+This is more tricky, but alot of editors depend on VS code. So this should be set up with a symlink to make sure that I have the right settings all over. See windsurf f.eks as an example of setting up another vs code editor.
+
+Extensions today is not automatically updated, so its a bit fragile. But I have made a base extension backup, which `setupvscode` handles.
 
