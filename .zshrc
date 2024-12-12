@@ -8,7 +8,6 @@ export DOTFILE_LOCATION=~/code/.dotfiles
 export APPLICATION_SUPPORT=~/Library/Application\ Support
 
 
-
 ################################################################################
 #Initializing zsh with plugins
 ################################################################################
@@ -88,7 +87,6 @@ fi
 
 # Added by Windsurf
 export PATH="/Users/vongohren/.codeium/windsurf/bin:$PATH"
-alias surf="windsurf"
 
 #z command https://github.com/rupa/z installed by brew
 . `brew --prefix`/etc/profile.d/z.sh
@@ -165,37 +163,56 @@ setupruby () {
 }
 
 setupvscode() {
-  brew install --cask visual-studio-code@insiders
-  ln -s $DOTFILE_LOCATION/vscode/settings.json $APPLICATION_SUPPORT/Code - Insiders/User/settings.json
-  ln -s $DOTFILE_LOCATION/vscode/keybindings.json $APPLICATION_SUPPORT/Code - Insiders/User/keybindings.json
-  ln -s $DOTFILE_LOCATION/vscode/snippets/ $APPLICATION_SUPPORT/Code\ -\ Insiders/User
-
-  while read extension; do
-    surf --install-extension "$extension"
-  done < $DOTFILE_LOCATION/vscode/extensions.txt
+  setupVsCodeEditorFunction "Code\ -\ Insiders" "visual-studio-code@insiders" "code"
+  setupcodeeditoraliases
 }
 
 setupwindsurf() {
   # https://codeium.com/windsurf 
-  brew install --cask windsurf
-  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/settings.json" ]; then
-    rm "$APPLICATION_SUPPORT/Windsurf/User/settings.json"
-  fi
-  ln -s $DOTFILE_LOCATION/vscode/settings.json $APPLICATION_SUPPORT/Windsurf/User/settings.json
-  
-  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json" ]; then
-    rm "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json"
-  fi
-  ln -s $DOTFILE_LOCATION/vscode/keybindings.json $APPLICATION_SUPPORT/Windsurf/User/keybindings.json
-  
-  if [ -f "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json" ]; then
-    rm "$APPLICATION_SUPPORT/Windsurf/User/keybindings.json"
-  fi
-  ln -s $DOTFILE_LOCATION/vscode/snippets/ $APPLICATION_SUPPORT/Windsurf/User
+  setupVsCodeEditorFunction "Windsurf" "windsurf" "windsurf"
+  setupcodeeditoraliases
+}
 
-  while read extension; do
-    surf --install-extension "$extension"
-  done < $DOTFILE_LOCATION/vscode/extensions.txt
+setupcursor() {
+  # https://www.cursor.com/
+  setupVsCodeEditorFunction "Cursor" "cursor" "cursor"
+  setupcodeeditoraliases
+}
+
+setupVsCodeEditorFunction() {
+    local APP_NAME=$1      # First argument: application name
+    local INSTALL_CMD=$2   # Second argument: installation command
+    local CMD_NAME=$3      # Third argument: command to install extensions
+    local USER_DIR="$APPLICATION_SUPPORT/$APP_NAME/User"
+
+    # Install the application
+    brew install --cask $INSTALL_CMD
+
+    # Create symlinks for settings, keybindings, and snippets
+    # -f removes existing file/directory if it exists, no need for separate checks
+    ln -sf $DOTFILE_LOCATION/vscode/settings.json "$USER_DIR/settings.json"
+    ln -sf $DOTFILE_LOCATION/vscode/keybindings.json "$USER_DIR/keybindings.json"
+    ln -sf $DOTFILE_LOCATION/vscode/snippets/ "$USER_DIR/snippets"
+
+    # Install extensions in parallel using xargs
+    xargs -P 4 -I {} $CMD_NAME --install-extension {} < $DOTFILE_LOCATION/vscode/extensions.txt
+}
+
+exportExtensions() {
+    local temp_file=$(mktemp)
+    
+    # Export current extensions to temp file
+    code-insiders --list-extensions > "$temp_file"
+    windsurf --list-extensions >> "$temp_file"
+    cursor --list-extensions >> "$temp_file"
+    
+    # Sort and remove duplicates, then save to extensions.txt
+    sort -u "$temp_file" > "$DOTFILE_LOCATION/vscode/extensions.txt"
+    
+    # Clean up temp file
+    rm "$temp_file"
+    
+    echo "✨ Extensions have been exported and merged to $DOTFILE_LOCATION/vscode/extensions.txt"
 }
 
 setupdoppler() {
@@ -208,6 +225,14 @@ setupdoppler() {
 ################################################################################
 # Aliases
 ################################################################################
+setupcodeeditoraliases() {
+  echo "Setting up code editor aliases"
+  alias code="code-insiders"
+  alias codeold="code"
+  alias surf="windsurf"
+  alias cur="cursor"
+}
+
 alias reload="source ~/.zshrc" #Reload the source
 port () {lsof -i :"$1";}
 alias f="open -a Finder ./"
@@ -215,11 +240,11 @@ alias size="du -sh"
 alias linked="( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l"
 alias bundletools="java -jar ~/code/scripts/bundletool.jar"
 alias itj="/usr/local/bin/idea"
-alias code="code-insiders"
-alias codeold="code"
 alias gcloud="~/code/utils/google-cloud-sdk/bin/gcloud"
+# alias gcloud="~/code/Diwala/gcloud-versions/google-cloud-sdk/bin/gcloud"
 alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
 alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
+setupcodeeditoraliases
 
 ################################################################################
 # Aliases for code project start
@@ -292,6 +317,7 @@ legacycodingstuff () {
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
 }
+
 
 # Alias function legacy
 setupandroid() {
