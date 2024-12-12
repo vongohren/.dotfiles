@@ -218,8 +218,45 @@ exportExtensions() {
 setupdoppler() {
   # Prerequisite. gnupg is required for binary signature verification
   brew install gnupg
-  # Next, install using brew (use `doppler update` for subsequent updates)
-  brew install dopplerhq/cli/doppler
+  # Not using brew to support auto update features
+  curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh | sudo sh
+}
+
+setupjavamanager() {
+  if command -v java &> /dev/null; then
+    echo "Java is already installed on your system. Please clean up and remove any existing Java installations before running this."
+    java -version
+    which java
+    return
+  fi
+
+  # For managing JAVA, this is the shitnizz
+  curl -s "https://get.sdkman.io" | bash
+  source "/Users/vongohren/.sdkman/bin/sdkman-init.sh"
+}
+
+setupjava() {
+  if ! command -v sdk &> /dev/null; then
+    echo "sdk (Java Version Manager) is not installed. Please install it first, see setupjavamanager function."
+    return
+  fi
+
+  sdk install java
+}
+
+setupandroidsdk() {
+  brew install --cask android-commandlinetools
+  sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34"
+  yes | sdkmanager --licenses
+}
+
+setupflutter() {
+  brew install --cask flutter
+  flutter doctor
+}
+
+setupmas() {
+  brew install mas
 }
 
 ################################################################################
@@ -328,3 +365,19 @@ setupandroid() {
   brew install --cask android-sdk
   brew install --cask android-platform-tools
 }
+
+################################################################################
+# END OF FILE PROGRAMS
+################################################################################
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# pnpm
+export PNPM_HOME="/Users/vongohren/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
