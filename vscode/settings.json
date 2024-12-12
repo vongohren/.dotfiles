@@ -33,5 +33,6 @@
     "[python]": {
         "editor.formatOnType": true
     },
-    "svg.preview.mode": "img"
+    "svg.preview.mode": "img",
+    "window.commandCenter": 1
 }

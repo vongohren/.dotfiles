@@ -6,4 +6,5 @@ eamodio.gitlens
 github.copilot
 github.copilot-chat
 postman.postman-for-vscode
+vue.volar
 ziyasal.vscode-open-in-github
