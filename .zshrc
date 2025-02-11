@@ -62,7 +62,7 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 
 ################################################################################
 # 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
-# Sourcing - source ~/.zshrc
+# Sourcing - source ~/.zshrc and aliases
 # 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
 ################################################################################
 export GOROOT=/usr/local/go
@@ -110,15 +110,76 @@ export PATH=$PATH:"$VOLTA_HOME/bin"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 
+export PATH="$PATH:$HOME/.cargo/bin"
+
+# Java
+export JAVA_HOME="/Users/vongohren/.sdkman/candidates/java/current"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# Android
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/emulator"
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+
+################################################################################
+# Aliases
+setupcodeeditoraliases() {
+  echo "Setting up code editor aliases"
+  alias code="code-insiders"
+  alias codeold="code"
+  alias surf="windsurf"
+  alias curs="cursor"
+}
+
+alias reload="source ~/.zshrc" #Reload the source
+port () {lsof -i :"$1";}
+alias f="open -a Finder ./"
+alias size="du -sh"
+alias linked="( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l"
+alias bundletools="java -jar ~/code/scripts/bundletool.jar"
+alias itj="/usr/local/bin/idea"
+alias gcloud="~/code/utils/google-cloud-sdk/bin/gcloud"
+# alias gcloud="~/code/Diwala/gcloud-versions/google-cloud-sdk/bin/gcloud"
+alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
+alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
+setupcodeeditoraliases
+
 ################################################################################
 # Setup functions for wanted dependencies
 ################################################################################
+
+# Languages
 
 setuppython() {
   brew install openssl readline sqlite3 xz zlib
   brew install pyenv
   pyenv install 3.10.0
   pyenv global 3.10.0
+}
+
+setupruby () {
+  brew install rbenv
+  RUBY_GEMS=(
+      bundler
+      filewatcher
+  )
+
+  echo "Installing Ruby gems"
+  sudo gem install ${RUBY_GEMS[@]}
+}
+
+setuprust() {
+  # Install rust with version management
+  # You can uninstall at any time with rustup self uninstall and these changes will be reverted.
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
+# General tools
+
+## Mac App Store from command line
+setupmas() {
+  brew install mas
 }
 
 setuphammerspoon () {
@@ -132,17 +193,6 @@ setupdocker() {
   etc=/Applications/Docker.app/Contents/Resources/etc
   ln -s $etc/docker.bash-completion $(brew --prefix)/etc/bash_completion.d/docker
   ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
-}
-
-setupruby () {
-  brew install rbenv
-  RUBY_GEMS=(
-      bundler
-      filewatcher
-  )
-
-  echo "Installing Ruby gems"
-  sudo gem install ${RUBY_GEMS[@]}
 }
 
  setupgcloud() {                                                                                                                                                                                      
@@ -222,6 +272,8 @@ setupdoppler() {
   curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh | sudo sh
 }
 
+# Java
+
 setupjavamanager() {
   if command -v java &> /dev/null; then
     echo "Java is already installed on your system. Please clean up and remove any existing Java installations before running this."
@@ -244,6 +296,8 @@ setupjava() {
   sdk install java
 }
 
+# Mobile development
+
 setupandroidsdk() {
   brew install --cask android-commandlinetools
   sdkmanager "platform-tools" "build-tools;34.0.0" "platforms;android-34"
@@ -255,33 +309,10 @@ setupflutter() {
   flutter doctor
 }
 
-setupmas() {
-  brew install mas
+setupc() {
+  brew install cmake
 }
 
-################################################################################
-# Aliases
-################################################################################
-setupcodeeditoraliases() {
-  echo "Setting up code editor aliases"
-  alias code="code-insiders"
-  alias codeold="code"
-  alias surf="windsurf"
-  alias cur="cursor"
-}
-
-alias reload="source ~/.zshrc" #Reload the source
-port () {lsof -i :"$1";}
-alias f="open -a Finder ./"
-alias size="du -sh"
-alias linked="( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l"
-alias bundletools="java -jar ~/code/scripts/bundletool.jar"
-alias itj="/usr/local/bin/idea"
-alias gcloud="~/code/utils/google-cloud-sdk/bin/gcloud"
-# alias gcloud="~/code/Diwala/gcloud-versions/google-cloud-sdk/bin/gcloud"
-alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
-alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
-setupcodeeditoraliases
 
 ################################################################################
 # Aliases for code project start
@@ -353,17 +384,6 @@ legacycodingstuff () {
   cd "$HOME/code/executables"
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-darwin-amd64 && chmod +x minikube
   cd "$HOME"
-}
-
-
-# Alias function legacy
-setupandroid() {
-  # Need the tools to connect to the phone, adb comes with platform tools
-  # If you are using something like android studio, you need to point it to this sdk
-  # Output can be seen with $(brew --prefix)/share/android-sdk/
-  # Other direct tools such as abd & android are added to $(brew --prefix)/bin
-  brew install --cask android-sdk
-  brew install --cask android-platform-tools
 }
 
 ################################################################################
