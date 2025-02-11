@@ -1,7 +1,6 @@
 {
     // Windsurf specific settings
     "workbench.colorTheme": "SynthWave84",
-    "windsurf.autocompleteSpeed": "fast",
     // VS Code general settings
     "vs-kubernetes": {
         "vs-kubernetes.minikube-path": "/Users/snorre/.vs-kubernetes/tools/minikube/darwin-amd64/minikube"
@@ -34,5 +33,14 @@
         "editor.formatOnType": true
     },
     "svg.preview.mode": "img",
-    "window.commandCenter": 1
+    "window.commandCenter": 1,
+    "database-client.autoSync": true,
+    "windsurf.enableSupercomplete": false,
+    "windsurf.autocompleteSpeed": "fast",
+    "[json]": {
+        "editor.defaultFormatter": "mblode.pretty-formatter"
+    },
+    "terminal.integrated.scrollback": 4000,
+    "git.suggestSmartCommit": false,
+    "git.confirmSync": false
 }
