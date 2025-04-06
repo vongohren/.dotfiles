@@ -488,6 +488,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:/usr/local/go/bin
+
+# Go when installing with the installer from https://go.dev/dl/
+export GOROOT=/usr/local/go/
+export PATH=$PATH:$GOROOT/bin
