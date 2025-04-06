@@ -65,10 +65,6 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 # Sourcing - source ~/.zshrc and aliases
 # 🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠🧠
 ################################################################################
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOROOT:$GOPATH:$GOBIN
 
 # Google cloud sdk python version and setup
 export CLOUDSDK_PYTHON=$(pyenv root)/shims/python
@@ -122,6 +118,9 @@ export PATH="$PATH:$ANDROID_HOME/cmdline-tools/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/emulator"
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 
+# Protobuff dependencies
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
 ################################################################################
 # Aliases
 setupcodeeditoraliases() {
@@ -144,6 +143,8 @@ alias gcloud="~/code/utils/google-cloud-sdk/bin/gcloud"
 alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
 alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
 setupcodeeditoraliases
+
+lum() { lumen --config ~/code/.lumen/lumen.config.json "$@"; }
 
 ################################################################################
 # Setup functions for wanted dependencies
@@ -195,21 +196,25 @@ setupdocker() {
   ln -s $etc/docker-compose.bash-completion $(brew --prefix)/etc/bash_completion.d/docker-compose
 }
 
- setupgcloud() {                                                                                                                                                                                      
-   local url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-darwin-arm.tar.gz"
-   local download_dir="$HOME/Downloads"
-   local install_dir="$HOME/code/utils/google-cloud-sdk"
-   local tar_file="$download_dir/google-cloud-sdk.tar.gz"
-   # Download the tar.gz file
-   curl -o "$tar_file" "$url"
-   # Create the install directory if it doesn't exist
-   mkdir -p "$install_dir"
-   # Extract the tar.gz file
-   tar -xzf "$tar_file" -C "$install_dir" --strip-components=1
-   # Run the install script
-   bash "$install_dir/install.sh"
-   # Remove the tar.gz file
-   rm "$tar_file"
+setupaws() {
+  brew install awscli
+}
+
+setupgcloud() {                                                                                                                                                                                      
+  local url="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-darwin-arm.tar.gz"
+  local download_dir="$HOME/Downloads"
+  local install_dir="$HOME/code/utils/google-cloud-sdk"
+  local tar_file="$download_dir/google-cloud-sdk.tar.gz"
+  # Download the tar.gz file
+  curl -o "$tar_file" "$url"
+  # Create the install directory if it doesn't exist
+  mkdir -p "$install_dir"
+  # Extract the tar.gz file
+  tar -xzf "$tar_file" -C "$install_dir" --strip-components=1
+  # Run the install script
+  bash "$install_dir/install.sh"
+  # Remove the tar.gz file
+  rm "$tar_file"
 }
 
 setupvscode() {
@@ -265,6 +270,82 @@ exportExtensions() {
     echo "✨ Extensions have been exported and merged to $DOTFILE_LOCATION/vscode/extensions.txt"
 }
 
+downloadAndInstallExtension() {
+    local extension=$1
+    local cmd=$2
+    local temp_dir=$(mktemp -d)
+    local publisher=$(echo $extension | cut -d. -f1)
+    local name=$(echo $extension | cut -d. -f2)
+    
+    echo "Downloading $extension..."
+    # Get latest version and download URL
+    local json_data=$(curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/$publisher/vsextensions/$name/latest/vspackage")
+    
+    if [ $? -eq 0 ]; then
+        local vsix_path="$temp_dir/$name.vsix"
+        curl -L -o "$vsix_path" "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/$publisher/vsextensions/$name/latest/vspackage"
+        
+        if [ -f "$vsix_path" ]; then
+            echo "Installing $extension from VSIX..."
+            $cmd --install-extension "$vsix_path" 2>&1 || {
+                echo "⚠️  Failed to install $extension from VSIX"
+                return 1
+            }
+        else
+            echo "⚠️  Failed to download VSIX for $extension"
+            return 1
+        fi
+    else
+        echo "⚠️  Failed to get version info for $extension"
+        return 1
+    fi
+    
+    rm -rf "$temp_dir"
+}
+
+installExtensions() {
+    local editor=$1
+    local cmd
+    
+    # Map editor name to its command
+    case $editor in
+        "code-insiders")
+            cmd="code-insiders"
+            ;;
+        "windsurf")
+            cmd="windsurf"
+            ;;
+        "cursor")
+            cmd="cursor"
+            ;;
+        *)
+            echo "❌ Unsupported editor: $editor"
+            echo "Supported editors: code-insiders, windsurf, cursor"
+            return 1
+            ;;
+    esac
+    
+    echo "🔄 Installing extensions for $editor..."
+    
+    # Create a temporary directory for downloads
+    local temp_dir=$(mktemp -d)
+    
+    # Read extensions line by line and install
+    while IFS= read -r extension || [ -n "$extension" ]; do
+        if [ -n "$extension" ]; then
+            downloadAndInstallExtension "$extension" "$cmd" || {
+                echo "---"
+                continue
+            }
+        fi
+    done < "$DOTFILE_LOCATION/vscode/extensions.txt"
+    
+    # Cleanup
+    rm -rf "$temp_dir"
+    
+    echo "✨ Extensions installation completed for $editor"
+}
+
 setupdoppler() {
   # Prerequisite. gnupg is required for binary signature verification
   brew install gnupg
@@ -313,6 +394,11 @@ setupc() {
   brew install cmake
 }
 
+setupprotoc() {
+  brew install protobuf
+  protoc --version
+  dart pub global activate protoc_plugin
+}
 
 ################################################################################
 # Aliases for code project start
@@ -401,3 +487,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin

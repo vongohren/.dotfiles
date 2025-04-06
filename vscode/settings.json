@@ -35,12 +35,15 @@
     "svg.preview.mode": "img",
     "window.commandCenter": 1,
     "database-client.autoSync": true,
-    "windsurf.enableSupercomplete": false,
-    "windsurf.autocompleteSpeed": "fast",
     "[json]": {
-        "editor.defaultFormatter": "mblode.pretty-formatter"
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "terminal.integrated.scrollback": 4000,
     "git.suggestSmartCommit": false,
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "dart.debugExternalPackageLibraries": true,
+    "dart.debugSdkLibraries": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "dart.cliConsole": "terminal",
+    "window.newWindowProfile": "Default"
 }

@@ -1,11 +1,11 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     { 
-        "key": "cmd+shift+i", 
+        "key": "cmd+shift+[BracketLeft]", 
         "command": "workbench.action.terminal.focus"
     },
     {
-        "key": "cmd+shift+i",
+        "key": "cmd+shift+[BracketLeft]",
         "command": "workbench.action.focusActiveEditorGroup",
         "when": "terminalFocus"
     },
@@ -57,7 +57,7 @@
         "command": "github.copilot.previousPanelSolution"
     },
     {
-        "key": "shift+cmd+[BracketLeft]",
+        "key": "ctrl+alt+cmd+[BracketLeft]",
         "command": "workbench.panel.chat.view.copilot.focus"
     },
     {
@@ -194,5 +194,20 @@
         "key": "ctrl+shift+g",
         "command": "-workbench.view.scm",
         "when": "workbench.scm.active && !gitlens:disabled && config.gitlens.keymap == 'chorded'"
-    }
+    },
+    {
+        "key": "ctrl+alt+cmd+[Backslash]",
+        "command": "aipopup.action.modal.generate",
+        "when": "editorFocus && !composerBarIsVisible"
+    },
+    {
+        "key": "ctrl+alt+cmd+-",
+        "command": "editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
+    {
+        "key": "shift+cmd+@",
+        "command": "-editor.action.deleteLines",
+        "when": "textInputFocus && !editorReadonly"
+    },
 ]
