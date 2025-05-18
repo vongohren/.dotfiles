@@ -184,9 +184,14 @@ setupmas() {
 }
 
 setuphammerspoon () {
+  # Create the .hammerspoon directory in dotfiles if it doesn't exist
+  mkdir -p $DOTFILE_LOCATION/.hammerspoon
+  # Remove existing hammerspoon directory if it exists
+  rm -rf ~/.hammerspoon
+  # Create the symbolic link
   ln -s $DOTFILE_LOCATION/.hammerspoon ~/.hammerspoon
+  # Install hammerspoon
   brew install --cask hammerspoon
-  
 } 
 
 setupdocker() {

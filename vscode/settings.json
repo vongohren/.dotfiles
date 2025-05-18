@@ -45,5 +45,6 @@
     "dart.debugSdkLibraries": true,
     "diffEditor.ignoreTrimWhitespace": false,
     "dart.cliConsole": "terminal",
-    "window.newWindowProfile": "Default"
+    "window.newWindowProfile": "Default",
+    "cursor.composer.shouldAllowCustomModes": true
 }
