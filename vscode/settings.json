@@ -46,5 +46,14 @@
     "diffEditor.ignoreTrimWhitespace": false,
     "dart.cliConsole": "terminal",
     "window.newWindowProfile": "Default",
-    "cursor.composer.shouldAllowCustomModes": true
+    "cursor.composer.shouldAllowCustomModes": true,
+    "terminal.integrated.allowedLinkSchemes": [
+        "file",
+        "http",
+        "https",
+        "mailto",
+        "vscode",
+        "vscode-insiders",
+        "docker-desktop"
+    ]
 }
