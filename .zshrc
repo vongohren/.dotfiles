@@ -405,6 +405,16 @@ setupprotoc() {
   dart pub global activate protoc_plugin
 }
 
+setuptemporal() {
+  echo "Installing Temporal CLI..."
+  brew install temporal
+}
+
+setuppnpm() {
+  echo "Installing pnpm via Volta..."
+  volta install pnpm
+}
+
 ################################################################################
 # Aliases for code project start
 ################################################################################
@@ -497,3 +507,6 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 # Go when installing with the installer from https://go.dev/dl/
 export GOROOT=/usr/local/go/
 export PATH=$PATH:$GOROOT/bin
+
+# add Pulumi to the PATH
+export PATH=$PATH:/Users/vongohren/.pulumi/bin

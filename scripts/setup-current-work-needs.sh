@@ -6,3 +6,10 @@ setupjavamanager
 setupjava
 setupandroidsdk
 setupflutter
+
+## Temporal CLI setup
+setuptemporal
+
+## Node package manager setup
+setuppnpm
+

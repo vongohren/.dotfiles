@@ -52,5 +52,6 @@
   ## Node version manager
   curl https://get.volta.sh | bash -s -- --skip-setup
   
+  
   brew install --cask github
   brew install --cask postman
