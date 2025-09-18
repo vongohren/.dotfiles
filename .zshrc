@@ -144,6 +144,8 @@ alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
 alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
 setupcodeeditoraliases
 
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
 lum() { lumen --config ~/code/.lumen/lumen.config.json "$@"; }
 
 ################################################################################
@@ -510,3 +512,12 @@ export PATH=$PATH:$GOROOT/bin
 
 # add Pulumi to the PATH
 export PATH=$PATH:/Users/vongohren/.pulumi/bin
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+# bun completions
+[ -s "/Users/vongohren/.bun/_bun" ] && source "/Users/vongohren/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
