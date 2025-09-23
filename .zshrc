@@ -114,7 +114,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 # Android
 export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
-export PATH="$PATH:$ANDROID_HOME/cmdline-tools/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:$ANDROID_HOME/emulator"
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 
@@ -521,3 +521,4 @@ export PATH=$PATH:/Users/vongohren/.pulumi/bin
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
