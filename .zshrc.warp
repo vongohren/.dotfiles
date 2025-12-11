@@ -1,0 +1,237 @@
+################################################################################
+# Warp Terminal - Clean ZSH Configuration
+# Migrated from oh-my-zsh setup - gradually add back what you need
+################################################################################
+
+export DOTFILE_LOCATION=~/code/.dotfiles
+export APPLICATION_SUPPORT=~/Library/Application\ Support
+
+################################################################################
+# History settings (Warp has its own, but these help with shell history)
+################################################################################
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+
+################################################################################
+# Completions (Warp has built-in, but these help with CLI tools)
+################################################################################
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+
+################################################################################
+# Language version managers
+################################################################################
+
+# Pyenv - https://github.com/pyenv/pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+# Rbenv - https://github.com/rbenv/rbenv
+if command -v rbenv 1>/dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
+# SDKMAN (Java) - must be near end of file
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+################################################################################
+# PATH additions
+################################################################################
+
+# Volta (Node.js)
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Go
+export GOROOT=/usr/local/go/
+export PATH="$GOROOT/bin:$PATH"
+
+# Java
+export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# Android
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export ANDROID_SDK_ROOT=$ANDROID_HOME
+export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# Yarn global
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Dart/Flutter pub cache
+export PATH="$HOME/.pub-cache/bin:$PATH"
+
+# Pulumi
+export PATH="$HOME/.pulumi/bin:$PATH"
+
+# MySQL client
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# Windsurf
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+
+# Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+# Local bin
+export PATH="$HOME/.local/bin:$PATH"
+
+################################################################################
+# Google Cloud SDK
+################################################################################
+export CLOUDSDK_PYTHON=$(pyenv root)/shims/python
+[[ -f "$HOME/code/utils/google-cloud-sdk/path.zsh.inc" ]] && source "$HOME/code/utils/google-cloud-sdk/path.zsh.inc"
+[[ -f "$HOME/code/utils/google-cloud-sdk/completion.zsh.inc" ]] && source "$HOME/code/utils/google-cloud-sdk/completion.zsh.inc"
+
+################################################################################
+# Locale
+################################################################################
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+################################################################################
+# Tool completions
+################################################################################
+complete -o nospace -C /usr/local/bin/terraform terraform
+
+# z command - directory jumping
+[[ -f "$(brew --prefix)/etc/profile.d/z.sh" ]] && . "$(brew --prefix)/etc/profile.d/z.sh"
+
+################################################################################
+# Aliases
+################################################################################
+alias reload="source ~/.zshrc"
+alias f="open -a Finder ./"
+alias size="du -sh"
+alias linked="( ls -l node_modules ; ls -l node_modules/@* ) | grep ^l"
+
+# Code editors
+alias code="code-insiders"
+alias codeold="code"
+alias surf="windsurf"
+alias curs="cursor"
+
+# Tools
+alias gcloud="$HOME/code/utils/google-cloud-sdk/bin/gcloud"
+alias bundletools="java -jar $HOME/code/scripts/bundletool.jar"
+alias itj="/usr/local/bin/idea"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+
+# Dotfiles
+alias setupos="$DOTFILE_LOCATION/scripts/setupos.sh"
+alias setupcurrentwork="$DOTFILE_LOCATION/scripts/setup-current-work-needs.sh"
+
+# Claude
+alias claude="$HOME/.claude/local/claude"
+
+################################################################################
+# Functions
+################################################################################
+port() { lsof -i :"$1"; }
+
+lum() { lumen --config ~/code/.lumen/lumen.config.json "$@"; }
+
+pruneGitLocal() {
+  git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done
+}
+
+# Pyenv install helper (for macOS SSL issues)
+pyenvinstall() {
+  LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/bzip2/lib" \
+  CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/bzip2/include" \
+  pyenv install $1
+}
+
+################################################################################
+# Setup functions (from full config - add more as needed)
+# See .zshrc.iterm-full for complete list
+################################################################################
+
+setupvscode() {
+  setupVsCodeEditorFunction "Code\ -\ Insiders" "visual-studio-code@insiders" "code"
+}
+
+setupwindsurf() {
+  setupVsCodeEditorFunction "Windsurf" "windsurf" "windsurf"
+}
+
+setupcursor() {
+  setupVsCodeEditorFunction "Cursor" "cursor" "cursor"
+}
+
+setupVsCodeEditorFunction() {
+  local APP_NAME=$1
+  local INSTALL_CMD=$2
+  local CMD_NAME=$3
+  local USER_DIR="$APPLICATION_SUPPORT/$APP_NAME/User"
+
+  brew install --cask $INSTALL_CMD
+  ln -sf $DOTFILE_LOCATION/vscode/settings.json "$USER_DIR/settings.json"
+  ln -sf $DOTFILE_LOCATION/vscode/keybindings.json "$USER_DIR/keybindings.json"
+  ln -sf $DOTFILE_LOCATION/vscode/snippets/ "$USER_DIR/snippets"
+  xargs -P 4 -I {} $CMD_NAME --install-extension {} < $DOTFILE_LOCATION/vscode/extensions.txt
+}
+
+exportExtensions() {
+  local temp_file=$(mktemp)
+  code-insiders --list-extensions > "$temp_file"
+  windsurf --list-extensions >> "$temp_file"
+  cursor --list-extensions >> "$temp_file"
+  sort -u "$temp_file" > "$DOTFILE_LOCATION/vscode/extensions.txt"
+  rm "$temp_file"
+  echo "Extensions exported to $DOTFILE_LOCATION/vscode/extensions.txt"
+}
+
+setuphammerspoon() {
+  mkdir -p $DOTFILE_LOCATION/.hammerspoon
+  rm -rf ~/.hammerspoon
+  ln -s $DOTFILE_LOCATION/.hammerspoon ~/.hammerspoon
+  brew install --cask hammerspoon
+}
+
+################################################################################
+# Project kickstart helpers
+################################################################################
+getEditorConfig() { cp $DOTFILE_LOCATION/personal/.editorconfig $1; }
+getTsFiles() {
+  cp $DOTFILE_LOCATION/coding/scripts/startTypeScript.sh $1
+  cp $DOTFILE_LOCATION/coding/templates/tsconfig.json $1
+  cp $DOTFILE_LOCATION/coding/templates/.NODEgitignore $1/.gitignore
+}
+getCoreCodingFiles() {
+  cp $DOTFILE_LOCATION/coding/scripts/prepGit.sh $1
+  cp $DOTFILE_LOCATION/coding/templates/README.md $1
+}
+
+################################################################################
+# End of config
+# NOTE: For full setup functions (setupjava, setupandroidsdk, etc.)
+# see .zshrc.iterm-full
+################################################################################

@@ -1,0 +1,10 @@
+# Warp terminal configuration
+# This directory is symlinked to ~/.warp
+#
+# Structure:
+# - themes/         Custom color themes (YAML)
+# - workflows/      Warp workflows (command shortcuts)
+# - launch_configurations/  Terminal launch configs
+#
+# Warp stores most settings in its app, but themes and workflows
+# can be synced via this directory.
