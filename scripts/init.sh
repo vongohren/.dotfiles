@@ -64,6 +64,39 @@ setup_iterm() {
 }
 
 ################################################################################
+# Claude Code Setup
+################################################################################
+
+setupclaude() {
+    echo "Setting up Claude Code..."
+
+    # Install Claude Code if not present
+    if ! command -v claude &> /dev/null; then
+        echo "Installing Claude Code..."
+        npm install -g @anthropic-ai/claude-code
+    fi
+
+    # Create ~/.claude if it doesn't exist
+    mkdir -p "$HOME/.claude"
+
+    # Symlink settings.json
+    if [ -f "$HOME/.claude/settings.json" ] && [ ! -L "$HOME/.claude/settings.json" ]; then
+        echo "Backing up existing ~/.claude/settings.json"
+        mv "$HOME/.claude/settings.json" "$HOME/.claude/settings.json.backup"
+    fi
+    ln -sf "$DOTFILES/.claude/settings.json" "$HOME/.claude/settings.json"
+
+    # Symlink commands directory
+    if [ -d "$HOME/.claude/commands" ] && [ ! -L "$HOME/.claude/commands" ]; then
+        echo "Backing up existing ~/.claude/commands"
+        mv "$HOME/.claude/commands" "$HOME/.claude/commands.backup"
+    fi
+    ln -sf "$DOTFILES/.claude/commands" "$HOME/.claude/commands"
+
+    echo "Claude Code setup complete!"
+}
+
+################################################################################
 # VS Code Setup
 ################################################################################
 
@@ -87,6 +120,7 @@ else
 fi
 
 setupvisualcode
+setupclaude
 
 echo ""
 echo "Init complete! Restart your terminal or run: source ~/.zshrc"

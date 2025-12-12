@@ -1,0 +1,13 @@
+{
+  "model": "opus",
+  "alwaysThinkingEnabled": false,
+  "permissions": {
+    "allow": [
+      "Bash(docker ps:*)",
+      "Bash(docker inspect:*)",
+      "Bash(curl:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
