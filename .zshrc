@@ -108,6 +108,11 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 
 export PATH="$PATH:$HOME/.cargo/bin"
 
+# .NET
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet@9/libexec"
+export PATH="/opt/homebrew/opt/dotnet@9/bin:$PATH"
+export PATH="/opt/homebrew/opt/dotnet/libexec:$PATH"
+
 # Java
 export JAVA_HOME="/Users/vongohren/.sdkman/candidates/java/current"
 export PATH="$JAVA_HOME/bin:$PATH"
@@ -176,6 +181,30 @@ setuprust() {
   # Install rust with version management
   # You can uninstall at any time with rustup self uninstall and these changes will be reverted.
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+}
+
+setupdotnet() {
+  # Install .NET SDK via Homebrew (formula, not cask - no sudo required)
+  # Install both .NET 9 (current) and latest stable
+  brew install dotnet@9
+  brew install dotnet
+
+  # Add to PATH and set DOTNET_ROOT (already in .zshrc typically, but ensure it's available)
+  export DOTNET_ROOT="/opt/homebrew/opt/dotnet@9/libexec"
+  export PATH="/opt/homebrew/opt/dotnet@9/bin:$PATH"
+
+  # Verify installation
+  echo ""
+  echo "=== .NET SDK Installation Complete ==="
+  echo ""
+  echo "Installed SDKs:"
+  dotnet --list-sdks
+  echo ""
+  echo "Default dotnet version:"
+  dotnet --version
+  echo ""
+  echo "To install additional SDK versions, run: brew install dotnet@<version>"
+  echo "Note: .NET 9 projects will automatically use the correct SDK version"
 }
 
 # General tools

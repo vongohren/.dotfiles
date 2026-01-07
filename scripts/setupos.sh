@@ -47,6 +47,9 @@
   brew install go
   brew install rust
 
+  # .NET setup
+  setupdotnet
+
   # Coding tools
   
   ## Node version manager
