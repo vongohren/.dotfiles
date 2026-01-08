@@ -108,10 +108,8 @@ complete -o nospace -C /usr/local/bin/terraform terraform
 
 export PATH="$PATH:$HOME/.cargo/bin"
 
-# .NET
+# .NET (DOTNET_ROOT set here, PATH added at end of file to take precedence)
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet@9/libexec"
-export PATH="/opt/homebrew/opt/dotnet@9/bin:$PATH"
-export PATH="/opt/homebrew/opt/dotnet/libexec:$PATH"
 
 # Java
 export JAVA_HOME="/Users/vongohren/.sdkman/candidates/java/current"
@@ -521,6 +519,9 @@ legacycodingstuff () {
 ################################################################################
 # END OF FILE PROGRAMS
 ################################################################################
+
+# .NET 9 PATH (must be near end to override /opt/homebrew/bin/dotnet which points to .NET 10)
+export PATH="/opt/homebrew/opt/dotnet@9/bin:$PATH"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

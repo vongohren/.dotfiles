@@ -112,6 +112,10 @@ export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 # Local bin
 export PATH="$HOME/.local/bin:$PATH"
 
+# .NET 9 (must be after brew shellenv to override /opt/homebrew/bin/dotnet which points to .NET 10)
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet@9/libexec"
+export PATH="/opt/homebrew/opt/dotnet@9/bin:$PATH"
+
 ################################################################################
 # Google Cloud SDK
 ################################################################################
@@ -257,3 +261,6 @@ getCoreCodingFiles() {
 # NOTE: For full setup functions (setupjava, setupandroidsdk, etc.)
 # see .zshrc.iterm-full
 ################################################################################
+
+# PengeFix secrets
+[[ -f ~/.pengefix/secrets.env ]] && source ~/.pengefix/secrets.env
