@@ -105,6 +105,9 @@ export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 # Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
+# MongoDB CLI
+export PATH="$HOME/code/utils/mongocli_2.0.7_macos_arm64/bin:$PATH"
+
 # Local bin
 export PATH="$HOME/.local/bin:$PATH"
 
