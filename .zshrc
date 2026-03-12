@@ -559,3 +559,9 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="/Users/vongohren/.antigravity/antigravity/bin:$PATH"
 
 alias claude="/Users/vongohren/.claude/local/claude"
+
+# MongoDB CLI
+export PATH="$HOME/code/utils/mongocli_2.0.7_macos_arm64/bin:$PATH"
+
+# Mux CLI
+export PATH="$HOME/.mux/bin:$PATH"

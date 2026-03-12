@@ -233,3 +233,9 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 # Neon MCP credentials
 [[ -f "/Users/vongohren/code/ctoroundtable/ctoroundtable-hq/infrastructure/neon/credentials.env" ]] && source "/Users/vongohren/code/ctoroundtable/ctoroundtable-hq/infrastructure/neon/credentials.env"
+
+# Mux CLI
+export PATH="$HOME/.mux/bin:$PATH"
+
+# Claude Code TTS toggle
+alias claude-tts="~/.claude/hooks/claude-tts.sh"
