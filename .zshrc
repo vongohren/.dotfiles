@@ -249,7 +249,6 @@ export PATH="$HOME/.mux/bin:$PATH"
 
 # Added by @synth1s/cloak
 eval "$(cloak init)"
-cloak use mine
 
 # Parent-directory cloak binding: auto-switch profile based on $PWD prefix.
 # Wraps the cloak-installed claude() so its existing behavior (.cloak files,
@@ -259,6 +258,9 @@ claude() {
   case "$PWD" in
     "$HOME/code/Mobai"|"$HOME/code/Mobai"/*)
       eval "$(command cloak switch --print-env mobai 2>/dev/null)"
+      ;;
+    "$HOME/code/personal-projects"|"$HOME/code/personal-projects"/*)
+      eval "$(command cloak switch --print-env mine 2>/dev/null)"
       ;;
   esac
   _cloak_claude_wrapped "$@"
