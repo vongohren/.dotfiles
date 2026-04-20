@@ -33,8 +33,15 @@ setopt HIST_SAVE_NO_DUPS
 ################################################################################
 # Completions (Warp has built-in, but these help with CLI tools)
 ################################################################################
-autoload -U +X bashcompinit && bashcompinit
-autoload -U +X compinit && compinit
+# Full compinit (with security audit + dump rebuild) runs at most once every 24h.
+# Other shells use the cached ~/.zcompdump via -C. This is the dominant startup cost.
+autoload -Uz compinit bashcompinit
+if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
+bashcompinit
 
 ################################################################################
 # Language version managers
@@ -259,7 +266,9 @@ claude() {
     "$HOME/code/Mobai"|"$HOME/code/Mobai"/*)
       eval "$(command cloak switch --print-env mobai 2>/dev/null)"
       ;;
-    "$HOME/code/personal-projects"|"$HOME/code/personal-projects"/*)
+    "$HOME/code/personal-projects"|"$HOME/code/personal-projects"/*|\
+    "$HOME/code/ctoroundtable"|"$HOME/code/ctoroundtable"/*|\
+    "$HOME/code/dao/PengeFix"|"$HOME/code/dao/PengeFix"/*)
       eval "$(command cloak switch --print-env mine 2>/dev/null)"
       ;;
   esac
@@ -313,3 +322,6 @@ alias tpengework='twork pengefix ~/code/dao/PengeFix/pengefix-hq'
 # NOTE: For setup instructions, see it-management/docs/my-setup.md
 # For legacy functions, see .zshrc.iterm-full
 ################################################################################
+
+# Resend CLI
+export PATH="$HOME/.resend/bin:$PATH"
