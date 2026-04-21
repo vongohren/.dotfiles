@@ -262,16 +262,20 @@ eval "$(cloak init)"
 # -a flag, account subcommand) keeps working.
 functions[_cloak_claude_wrapped]=$functions[claude]
 claude() {
-  case "$PWD" in
-    "$HOME/code/Mobai"|"$HOME/code/Mobai"/*)
-      eval "$(command cloak switch --print-env mobai 2>/dev/null)"
-      ;;
-    "$HOME/code/personal-projects"|"$HOME/code/personal-projects"/*|\
-    "$HOME/code/ctoroundtable"|"$HOME/code/ctoroundtable"/*|\
-    "$HOME/code/dao/PengeFix"|"$HOME/code/dao/PengeFix"/*)
-      eval "$(command cloak switch --print-env mine 2>/dev/null)"
-      ;;
-  esac
+  if [[ -z "$CLOAK_OVERRIDE" ]]; then
+    case "$PWD" in
+      "$HOME/code/Mobai"|"$HOME/code/Mobai"/*)
+        eval "$(command cloak switch --print-env mobai 2>/dev/null)"
+        ;;
+      "$HOME/code/personal-projects"|"$HOME/code/personal-projects"/*|\
+      "$HOME/code/ctoroundtable"|"$HOME/code/ctoroundtable"/*|\
+      "$HOME/code/dao/PengeFix"|"$HOME/code/dao/PengeFix"/*)
+        eval "$(command cloak switch --print-env mine 2>/dev/null)"
+        ;;
+    esac
+  elif [[ "$CLOAK_OVERRIDE" != "none" ]]; then
+    eval "$(command cloak switch --print-env "$CLOAK_OVERRIDE" 2>/dev/null)"
+  fi
   _cloak_claude_wrapped "$@"
 }
 
