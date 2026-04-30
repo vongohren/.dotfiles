@@ -61,6 +61,18 @@ fi
 ln -sf ~/code/.dotfiles/.zshrc.warp ~/.zshrc
 echo "Symlinked ~/.zshrc -> ~/code/.dotfiles/.zshrc.warp"
 
+# 7. Symlink Ghostty config
+echo "--- Symlinking Ghostty config ---"
+GHOSTTY_DIR="$HOME/Library/Application Support/com.mitchellh.ghostty"
+mkdir -p "$GHOSTTY_DIR"
+GHOSTTY_CONFIG="$GHOSTTY_DIR/config"
+if [ -f "$GHOSTTY_CONFIG" ] && [ ! -L "$GHOSTTY_CONFIG" ]; then
+  echo "Backing up existing Ghostty config to $GHOSTTY_CONFIG.backup"
+  mv "$GHOSTTY_CONFIG" "$GHOSTTY_CONFIG.backup"
+fi
+ln -sf ~/code/.dotfiles/ghostty/config "$GHOSTTY_CONFIG"
+echo "Symlinked Ghostty config -> ~/code/.dotfiles/ghostty/config"
+
 echo ""
 echo "=== Bootstrap complete ==="
 echo "Next steps:"

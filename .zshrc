@@ -241,6 +241,58 @@ twork() {
   fi
 }
 
+# tmux cheatsheet
+tmuxhelp() {
+  local bold=$'\e[1m' dim=$'\e[2m' cyan=$'\e[36m' yellow=$'\e[33m' green=$'\e[32m' reset=$'\e[0m'
+  cat <<EOF
+
+${bold}${yellow}tmux cheatsheet${reset}
+
+${bold}${cyan}Aliases / functions (from .zshrc)${reset}
+  ${green}tls${reset}                         list sessions
+  ${green}ta${reset}                          attach to last session
+  ${green}ta -t <name>${reset}                attach to named session
+  ${green}tks <name>${reset}                  kill session by name
+  ${green}twork <name> <dir>${reset}          attach or create 2x3 grid workspace
+
+${bold}${cyan}Sessions (from outside tmux)${reset}
+  tmux new -s <name>              new session
+  tmux new -s <name> -d           new session, detached
+  tmux ls                         list sessions
+  tmux attach -t <name>           attach to named session
+  tmux kill-session -t <name>     kill one session
+  tmux kill-server                kill ALL sessions
+
+${bold}${cyan}Inside tmux  (prefix = Ctrl+b)${reset}
+  ${dim}Sessions${reset}
+  Ctrl+b d                        detach
+  Ctrl+b s                        switch session (picker)
+  Ctrl+b \$                        rename current session
+
+  ${dim}Windows${reset}
+  Ctrl+b c                        new window
+  Ctrl+b ,                        rename window
+  Ctrl+b n  /  p                  next / previous window
+  Ctrl+b <0-9>                    jump to window number
+  Ctrl+b w                        list windows (picker)
+  Ctrl+b &                        kill window
+
+  ${dim}Panes${reset}
+  Ctrl+b %                        split pane vertical
+  Ctrl+b "                        split pane horizontal
+  Ctrl+b <arrow>                  move between panes
+  Ctrl+b z                        zoom pane toggle
+  Ctrl+b x                        kill pane
+  Ctrl+b {  /  }                  swap pane left / right
+  Ctrl+b space                    cycle layouts
+
+  ${dim}Copy mode${reset}
+  Ctrl+b [                        enter copy mode  (q to exit)
+  Ctrl+b ]                        paste buffer
+
+EOF
+}
+
 ################################################################################
 # Infrastructure & servers
 ################################################################################

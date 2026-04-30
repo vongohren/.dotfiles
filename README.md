@@ -12,7 +12,7 @@ git clone https://github.com/<you>/dotfiles.git ~/code/.dotfiles
 ~/code/.dotfiles/scripts/bootstrap.sh
 ```
 
-The bootstrap script installs: Xcode CLI tools, Homebrew, git, gh, Chrome, Bitwarden, the terminal stack (Ghostty, Zellij, Yazi), and symlinks `.zshrc`.
+The bootstrap script installs: Xcode CLI tools, Homebrew, git, gh, Chrome, Bitwarden, the terminal stack (Ghostty, Zellij, Yazi), and symlinks `.zshrc` and the Ghostty config.
 
 ## After bootstrap: AI-driven setup
 
@@ -38,6 +38,7 @@ The setup knowledge lives in [`it-management/docs/my-setup.md`](https://github.c
 | `scripts/github-add-keys.sh` | SSH key setup for GitHub |
 | `scripts/swap-githubrepo-to-ssh.sh` | Switch this repo from HTTPS to SSH after keys are set up |
 | `vscode/` | Shared settings, keybindings, snippets, extensions for VS Code / Windsurf / Cursor |
+| `ghostty/` | Ghostty terminal config, symlinked to `~/Library/Application Support/com.mitchellh.ghostty/config`. See [`ghostty/README.md`](ghostty/README.md) for adjustment knobs and failure diagnosis. |
 
 ## SSH setup
 

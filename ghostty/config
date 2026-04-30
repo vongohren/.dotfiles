@@ -1,0 +1,19 @@
+# Ghostty config
+# Docs: https://ghostty.org/docs/config
+# Reload while running: Cmd+Shift+, (some keys still need a full restart)
+# See README.md in this dir for adjustment-knob tradeoffs and failure diagnosis.
+
+# Left Option = Alt/Meta (for shell/Vim escape sequences).
+# Right Option = normal macOS (Norwegian chars: ~ @ { } [ ] € | etc.).
+macos-option-as-alt = left
+
+theme = Catppuccin Mocha
+font-size = 14
+window-padding-x = 8
+window-padding-y = 8
+
+# URL clicking inside tmux/zellij:
+# `link-url` underlines URLs on hover; `mouse-shift-capture = false` lets
+# Shift+Click bypass the terminal app's mouse capture so Ghostty handles it.
+link-url = true
+mouse-shift-capture = false
